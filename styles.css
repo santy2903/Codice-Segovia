@@ -1,0 +1,85 @@
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  background-color: black;
+  background-image: url('fondo.jpeg');
+  background-size: contain;
+  background-position: center;
+  color: rgb(255, 255, 255);
+  font-family: Arial, sans-serif;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-repeat: no-repeat;
+}
+
+.container {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 50px;
+  border-radius: 10px;
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 3rem;
+}
+
+
+#continue-button {
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  background-color: #ff5733;
+  color: white;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+#continue-button:hover {
+  background-color: #c74527;
+}
+#start-button {
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  background-color: #ff5733;
+  color: white;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+#start-button:hover {
+  background-color: #c74527;
+}
+
+/* Estilos para el botón de pausa/reproducción */
+.pause-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.pause-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Ajuste del tamaño del icono dentro del botón */
+.icon {
+  width: 50px; /* Ajusta el tamaño aquí según necesites */
+  height: 50px;
+}
+
+@media (max-width: 768px) {
+  body {
+    background-size: contain;
+    background-image: url('fondomovile.jpeg');
+  }
+}

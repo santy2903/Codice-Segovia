@@ -1,0 +1,157 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #f3f4f6, #dfe9f3);
+  background-image: url("fondo.jpeg");
+  background-size: cover; /* Hace que la imagen cubra toda la pantalla */
+  background-position: center; /* Centra la imagen en la pantalla */
+  background-attachment: fixed; /* Hace que la imagen no se mueva al hacer scroll */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  margin: 0;
+  padding: 20px;
+  height: 100vh; /* Asegura que el cuerpo ocupe toda la altura de la ventana */
+}
+
+
+.contenedor {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.titulo-principal {
+    text-align: center;
+    font-size: 2.3rem;
+    margin-bottom: 50px;
+    color: #ffffff;
+    text-shadow: black 4px 4px 4px;
+}
+
+.cascada {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.fila {
+  margin-left: var(--offset);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.fila a {
+  text-decoration: none;
+}
+
+.boton-circular {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 3px solid #000000;
+  box-shadow: 3px 18px 8px rgba(49, 49, 49, 0.58);
+  cursor: pointer;
+  background-image: var(--img);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+.boton-circular:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(0,0,0,0.25);
+}
+
+.boton-circular.completada {
+  border: 4px solid #2e7d32;
+}
+
+.boton-circular.completada::after {
+  content: "✓";
+  position: absolute;
+  right: -6px;
+  bottom: -6px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #2e7d32;
+  color: white;
+  font-weight: bold;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+}
+
+.titulo {
+    background: rgba(11, 11, 11, 0.534);
+    padding: 18px 26px;
+    border-radius: 18px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #ffffff;
+    min-width: 220px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+.reiniciar {
+  margin-top: 30px;
+  padding: 12px 18px;
+  border: none;
+  background: #8b1e1e;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.reiniciar:hover {
+  opacity: 0.9;
+}
+
+.continuar {
+  margin-top: 15px;
+  margin-left: 10px;
+  padding: 12px 18px;
+  border: none;
+  background: #2e7d32;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.continuar:disabled {
+  background: #9e9e9e;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+
+/* Ajustes para la versión móvil */
+@media (max-width: 768px) {
+  body{
+    padding: 20px;
+  }
+  .fila {
+    margin-left: 0 !important; /* Elimina el margen izquierdo */
+    justify-content: center; /* Centra los botones dentro de la fila */
+    align-items: center; /* Asegura que los elementos estén alineados al centro verticalmente */
+  }
+
+  .boton-circular {
+    width: 150px;
+    height: 150px;
+  }
+
+  .titulo {
+    min-width: auto;
+    width: 100%;
+    font-size: 1.1rem;
+    text-align: center; /* Centra el título del botón */
+  }
+}
+

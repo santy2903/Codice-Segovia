@@ -1,0 +1,95 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #f3f4f6, #dfe9f3);
+  background-image: url("fondo.jpeg");
+  background-size: cover; /* Hace que la imagen cubra toda la pantalla */
+  background-position: center; /* Centra la imagen en la pantalla */
+  background-attachment: fixed; /* Hace que la imagen no se mueva al hacer scroll */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  margin: 0;
+  padding: 20px;
+  height: 100vh; /* Asegura que el cuerpo ocupe toda la altura de la ventana */
+}
+
+.pantalla {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.tarjeta {
+  color: #fff;
+  width: 100%;
+  max-width: 650px;
+  background: rgba(0, 0, 0, 0.722);
+  border-radius: 18px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  text-align: center;
+}
+
+.imagen-parada {
+  width: 100%;
+  max-height: 280px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 15px 0;
+}
+
+.pregunta {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+}
+
+.campo {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.boton {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  background: #f85f00;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.boton:hover {
+  opacity: 0.95;
+}
+
+.mensaje {
+  min-height: 24px;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+.mensaje.error {
+  color: #c62828;
+}
+
+.volver {
+  display: inline-block;
+  margin-top: 18px;
+  color: #f85f00;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.correcta {
+  font-size: 2rem;
+  color: #2e7d32;
+  margin-bottom: 10px;
+}

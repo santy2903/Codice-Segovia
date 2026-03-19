@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Enhorabuena</title>
+    <link rel="stylesheet" href="criptex.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Escucha atentamente el video</h1>
+        <div class="video-wrapper">
+            <video id="video" class="video" preload="metadata" playsinline>
+                <source src="criptex.mp4" type="video/mp4">
+                Tu navegador no soporta la etiqueta de video.
+            </video>
+            <button id="playButton" class="play-button" aria-label="Reproducir video">
+                <svg class="play-icon" viewBox="0 0 24 24" width="48" height="48">
+                    <path fill="white" d="M8 5v14l11-7z"/>
+                </svg>
+            </button>
+        </div>
+        <div class="hint-container">
+            <p class="hint-text">Pista: No intenteis buscar la palabra. La palabra ya os encontro a vosotros en el video</p>
+        </div>
+        
+        <!-- Sistema de ruedas giratorias -->
+        <div class="wheels-container">
+            <div class="wheels-title">Gira cada rueda para formar la palabra Magica:</div>
+            <div class="wheels-row" id="wheelsRow">
+                <!-- Las 6 ruedas se generarán dinámicamente con JavaScript -->
+            </div>
+            
+            <div class="word-display" id="wordDisplay">
+                <!-- Las letras se generarán dinámicamente -->
+            </div>
+        </div>
+        
+        <div class="validation-container">
+            <button id="validateButton" class="validate-button">Validar palabra</button>
+            <div id="messageContainer" class="message-container"></div>
+        </div>
+    </div>
+    <script src="criptex.js"></script>
+</body>
+</html>

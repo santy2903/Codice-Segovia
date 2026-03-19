@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Enhorabuena</title>
+    <link rel="stylesheet" href="coronacion.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Habeis resuelto el Codice.</h1>
+        <h1>Reproducir el video.</h1>
+        
+        <div class="video-wrapper">
+            <video id="video" class="video" preload="metadata" playsinline>
+                <source src="coronacion.mp4" type="video/mp4">
+                Tu navegador no soporta la etiqueta de video.
+            </video>
+            
+            <!-- Botón de play redondo en el centro -->
+            <button id="playButton" class="play-button" aria-label="Reproducir video">
+                <svg class="play-icon" viewBox="0 0 24 24" width="48" height="48">
+                    <path fill="white" d="M8 5v14l11-7z"/>
+                </svg>
+            </button>
+        </div>
+        
+        <h1>Pulsar sobre el boton para recoger vuestro premio</h1>
+        
+        <button id="mapaButton" class="premio-button">Recoge el premio</button>
+    </div>
+
+    <script src="coronacion.js"></script>
+</body>
+</html>

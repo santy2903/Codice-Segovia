@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tarjeta 1 - El Selfie del Diablo</title>
+  <link rel="stylesheet" href="plantilla.css" />
+</head>
+<body>
+  <div class="overlay"></div>
+
+  <main class="container">
+    <header class="card-header">
+      <h1>TARJETA 1: El Selfie del Diablo</h1>
+      <p class="lugar"><strong>Lugar:</strong> Estatua del Demonio (Calle San Juan)</p>
+    </header>
+
+    <section class="card-content">
+      <div class="image-box">
+        <img src="diablo.jpeg" alt="Estatua del Diablo" />
+      </div>
+
+      <div class="pista">
+        <p>
+          <strong>Pista:</strong>
+          El diablo es famoso en redes sociales. Para conseguir el primer número,
+          hazte un selfie con él como si fueras un turista más.
+          <br><br>
+          En la foto, cuenta cuántos arcos <em>inferiores completos (cerrados en su totalidad)</em> del Acueducto aparecen.
+          Solo los que ves al hacerte el selfie con el diablo.
+        </p>
+      </div>
+
+      <div class="input-container">
+        <label for="numero">RESPUESTA:</label>
+        <input type="number" id="numero" name="numero" placeholder="Escribe tu respuesta" />
+        <button type="button" id="verificar-btn">Verificar</button>
+        <!-- Aquí se mostrará el mensaje de "Correcto" o "Incorrecto" -->
+        <span id="mensaje-resultado"></span>
+      </div>
+    </section>
+  </main>
+
+  <script src="tarjeta1.js"></script>
+</body>
+</html>

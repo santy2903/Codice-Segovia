@@ -1,0 +1,365 @@
+/* Estilo base para el body */
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  background-color: black;
+  background-image: url('fondo.jpg');
+  background-size: cover;
+  background-position: center;
+  color: rgb(255, 255, 255);
+  font-family: Arial, sans-serif;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  height: auto;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  flex-direction: column;
+}
+
+/* Estilos de la caja contenedora */
+.container {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  margin: 20px auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Estilo del título */
+h1 {
+  margin-bottom: 15px;
+  font-size: 1.8rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  word-wrap: break-word;
+}
+
+/* Ajuste para títulos secundarios */
+h1:last-of-type {
+  font-size: 1.4rem;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+/* Estilo para el contenedor del video */
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  margin: 10px 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+  background-color: #000;
+}
+
+.video {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 16 / 9;
+  background-color: #000;
+}
+
+/* Botón de play personalizado */
+.custom-play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70px;
+  height: 70px;
+  background-color: rgba(255, 87, 51, 0.9);
+  border: 3px solid white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(255, 87, 51, 0.5);
+}
+
+.custom-play-button:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+  background-color: #ff5733;
+  box-shadow: 0 0 30px rgba(255, 87, 51, 0.8);
+}
+
+.custom-play-button::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 20px solid white;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  margin-left: 5px;
+}
+
+/* Ocultar botón cuando el video está reproduciendo */
+.video-wrapper.playing .custom-play-button {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Estilos para el campo de texto */
+#respuestaInput {
+  padding: 14px 12px;
+  width: 90%;
+  margin: 15px 0 12px 0;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: #333;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#respuestaInput:focus {
+  outline: 2px solid #ff5733;
+  background-color: white;
+}
+
+/* Estilo actualizado para el botón de validar */
+#validarButton {
+  font-size: 1.3rem;
+  padding: 14px 30px;
+  cursor: pointer;
+  border: none;
+  background-color: #ff5733;
+  color: white;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  margin: 5px 0 10px 0;
+  width: 90%;
+  max-width: 250px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 10px rgba(255, 87, 51, 0.3);
+}
+
+#validarButton:hover {
+  background-color: #c74527;
+  transform: scale(1.02);
+}
+
+/* Estilos para los mensajes de validación */
+.mensaje-correcto {
+  color: #4CAF50;
+  font-size: 1.2rem;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(76, 175, 80, 0.3);
+}
+
+.mensaje-incorrecto {
+  color: #ff3333;
+  font-size: 1.1rem;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(255, 51, 51, 0.3);
+}
+
+/* Estilo para el modo pantalla completa - SIN MARCOS NEGROS EN TODOS LOS DISPOSITIVOS */
+.video-wrapper:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+}
+
+.video-wrapper:-webkit-full-screen .video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Usamos cover para llenar toda la pantalla */
+  object-position: center center; /* Centramos el video para que no se corte de un solo lado */
+  aspect-ratio: auto;
+}
+
+.video-wrapper:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+}
+
+.video-wrapper:fullscreen .video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Usamos cover para llenar toda la pantalla */
+  object-position: center center; /* Centramos el video para que no se corte de un solo lado */
+  aspect-ratio: auto;
+}
+
+/* Soporte para Firefox */
+.video-wrapper:-moz-full-screen {
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+}
+
+.video-wrapper:-moz-full-screen .video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Usamos cover para llenar toda la pantalla */
+  object-position: center center; /* Centramos el video para que no se corte de un solo lado */
+  aspect-ratio: auto;
+}
+
+/* Estilo para dispositivos móviles */
+@media (max-width: 480px) {
+  body {
+    background-image: url('fondo.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    padding: 10px 0;
+  }
+
+  .container {
+    padding: 15px;
+    width: 95%;
+    max-width: 380px;
+    margin: 15px auto;
+  }
+
+  /* Títulos más pequeños en dispositivos móviles */
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  
+  h1:last-of-type {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  /* Video se ajusta perfectamente */
+  .video-wrapper {
+    max-width: 100%;
+    margin: 5px 0;
+  }
+
+  /* Botón de play más pequeño para móvil */
+  .custom-play-button {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .custom-play-button::after {
+    border-left: 18px solid white;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+  }
+
+  /* Campo de texto optimizado */
+  #respuestaInput {
+    width: 95%;
+    padding: 12px;
+    font-size: 0.95rem;
+    margin: 10px 0;
+  }
+
+  /* Botón de validar más cómodo para el pulgar */
+  #validarButton {
+    font-size: 1.1rem;
+    padding: 14px 20px;
+    width: 95%;
+    margin: 5px 0 10px 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Ajustes de espaciado */
+  #mensajeValidacion {
+    margin-top: 8px;
+    min-height: 25px;
+  }
+  
+  .mensaje-correcto,
+  .mensaje-incorrecto {
+    font-size: 1rem;
+    margin: 8px 0;
+  }
+  
+  /* Ajuste específico para móviles en pantalla completa */
+  .video-wrapper:-webkit-full-screen .video {
+    object-position: center center; /* Aseguramos que el video esté centrado */
+  }
+  
+  .video-wrapper:fullscreen .video {
+    object-position: center center; /* Aseguramos que el video esté centrado */
+  }
+}
+
+/* Ajustes para pantallas muy pequeñas */
+@media (max-width: 320px) {
+  .container {
+    padding: 12px;
+    width: 98%;
+  }
+  
+  h1 {
+    font-size: 1.3rem;
+  }
+  
+  h1:last-of-type {
+    font-size: 1.1rem;
+  }
+  
+  .custom-play-button {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .custom-play-button::after {
+    border-left: 15px solid white;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+  }
+  
+  #respuestaInput {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+  
+  #validarButton {
+    font-size: 1rem;
+    padding: 12px 15px;
+  }
+}
+
+/* Mejora para evitar zoom al enfocar inputs en iOS/Android */
+@media screen and (-webkit-min-device-pixel-ratio: 0) { 
+  select,
+  textarea,
+  input {
+    font-size: 16px !important;
+  }
+}

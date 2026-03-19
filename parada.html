@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parada</title>
+  <link rel="stylesheet" href="juego.css" />
+</head>
+<body>
+
+  <main class="pantalla">
+    <div class="tarjeta">
+      <h1 id="tituloParada"></h1>
+
+      <img id="imagenParada" class="imagen-parada" src="" alt="Imagen de la parada" />
+
+      <p id="preguntaParada" class="pregunta"></p>
+
+      <input
+        type="text"
+        id="respuestaUsuario"
+        class="campo"
+        placeholder="Escribe tu respuesta"
+        autocomplete="off"
+      />
+
+      <button id="verificarBtn" class="boton">Verificar</button>
+      <p id="mensaje" class="mensaje"></p>
+
+      <a href="mapa.html" class="volver">Volver al mapa</a>
+    </div>
+  </main>
+
+  <script src="datos.js"></script>
+  <script src="parada.js"></script>
+</body>
+</html>
