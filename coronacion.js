@@ -28,7 +28,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Evento para el botón de play
     playButton.addEventListener('click', function() {
-        video.play();
+        // Verificar que el video existe
+        if (video.readyState === 0) {
+            console.error('El video no se ha cargado correctamente');
+            alert('Error: No se pudo cargar el video. Verifica que el archivo existe.');
+            return;
+        }
+        
+        video.play().catch(function(error) {
+            console.error('Error al reproducir:', error);
+            alert('Error al reproducir el video. Por favor, intenta de nuevo.');
+        });
+        
         video.classList.add('playing');
         playButton.style.display = 'none';
         
@@ -57,9 +68,30 @@ document.addEventListener('DOMContentLoaded', function () {
         playButton.style.display = 'none';
     });
 
-    // Evento para el botón de premio
+    // Evento para el botón de premio - Versión mejorada
     mapaButton.addEventListener('click', function () {
-        window.location.href = 'premio.jpeg';
+        // Intentar con diferentes extensiones
+        const posiblesNombres = ['premio.jpeg', 'premio.jpg', 'premio.JPG', 'premio.JPEG'];
+        let intento = 0;
+        
+        function intentarCargar() {
+            if (intento < posiblesNombres.length) {
+                const img = new Image();
+                img.onload = function() {
+                    // Si la imagen carga, redirigir
+                    window.location.href = posiblesNombres[intento];
+                };
+                img.onerror = function() {
+                    intento++;
+                    intentarCargar();
+                };
+                img.src = posiblesNombres[intento];
+            } else {
+                alert('No se pudo encontrar la imagen del premio. Verifica que el archivo existe en el repositorio.');
+            }
+        }
+        
+        intentarCargar();
     });
 
     // Manejar cambios en pantalla completa
@@ -77,4 +109,12 @@ document.addEventListener('DOMContentLoaded', function () {
             // No hacemos nada, el video sigue reproduciéndose
         }
     }
+    
+    // Verificar que los archivos existen al cargar la página
+    console.log('Verificando archivos...');
+    
+    // Verificar video
+    video.addEventListener('error', function() {
+        console.error('Error al cargar el video. Verifica que el archivo "coronacion.mp4" existe.');
+    });
 });
