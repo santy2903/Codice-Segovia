@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem(`parada_${id}`, "ok");
       window.location.href = `correcta.html?id=${id}`;
     } else {
-      mensaje.textContent = "Respuesta incorrecta. Inténtalo otra vez.";
+      mensaje.textContent = "Respuesta incorrecta. Inténtarlo otra vez.";
       mensaje.className = "mensaje error";
     }
   }
