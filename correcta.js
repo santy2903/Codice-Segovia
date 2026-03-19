@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (parada) {
     document.getElementById("textoCorrecta").textContent =
-      `Has superado la parada: ${parada.titulo}`;
+      `Habeis superado la parada: ${parada.titulo}`;
   }
 
   setTimeout(() => {
