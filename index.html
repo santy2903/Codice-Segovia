@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El código secreto de Segovia</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Bienvenido al Juego</h1>
+    <button id="start-button">Jugar</button>
+  </div>
+
+  <!-- Botón para controlar el audio (mostrar icono de reproducir/pausar según el estado del audio) -->
+  <button id="pause-button" class="pause-button">
+    <img id="audio-icon" src="sinsonido.png" alt="Pausar/Reproducir" class="icon">
+  </button>
+
+  <audio id="background-music" loop>
+    <source src="fondo.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Audio para el clic del botón -->
+  <audio id="entrada-sound">
+    <source src="entrada.mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
