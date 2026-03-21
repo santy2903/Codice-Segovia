@@ -90,7 +90,7 @@ h1 {
 /* Estilo para dispositivos móviles */
 @media (max-width: 768px) {
   body {
-    background-image: url('fondomovile.jpeg');
+    background-image: url('criptex.jpg');
     background-size: cover;
   }
 
