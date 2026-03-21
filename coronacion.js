@@ -97,4 +97,3 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error('Error al cargar el video. Verifica que el archivo "coronacion.mp4" existe.');
     });
 });
- 
