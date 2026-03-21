@@ -35,14 +35,14 @@
             z-index: 1;
         }
 
-        /* Capa de superposición muy sutil */
+        /* Capa de superposición más oscura para mejorar contraste en móvil */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(255,255,200,0.1) 0%, rgba(200,180,120,0.05) 100%);
+            background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.5) 100%);
             z-index: 2;
             pointer-events: none;
         }
@@ -66,7 +66,7 @@
             padding-bottom: 2rem;
         }
 
-        /* Estilo de cada bloque de crédito - TODAS LAS LETRAS NEGRAS */
+        /* Estilo base de cada bloque de crédito - LETRAS NEGRAS CON SOMBRA */
         .credit-block {
             display: block;
             margin: 0 auto 2rem auto;
@@ -81,7 +81,7 @@
             border-right: none;
             font-family: 'MedievalSharp', 'UnifrakturCook', cursive;
             color: #000000;
-            text-shadow: 1px 1px 2px rgba(255,255,200,0.7);
+            text-shadow: 2px 2px 4px rgba(255,255,200,0.9);
             letter-spacing: 1px;
             opacity: 1;
         }
@@ -91,7 +91,7 @@
             font-weight: bold;
             margin-bottom: 0.6rem;
             color: #000000;
-            text-shadow: 1px 1px 2px rgba(255,255,200,0.6);
+            text-shadow: 2px 2px 4px rgba(255,255,200,0.9);
             letter-spacing: 4px;
         }
 
@@ -101,7 +101,7 @@
             font-weight: bold;
             color: #000000;
             margin: 0.25rem 0;
-            text-shadow: 1px 1px 2px rgba(255,255,200,0.7);
+            text-shadow: 2px 2px 4px rgba(255,255,200,0.9);
         }
 
         .credit-sub {
@@ -109,7 +109,8 @@
             font-style: italic;
             color: #000000;
             margin-top: 0.2rem;
-            text-shadow: 1px 1px 2px rgba(255,255,200,0.6);
+            text-shadow: 1px 1px 3px rgba(255,255,200,0.8);
+            font-weight: 600;
         }
 
         .credit-long {
@@ -117,8 +118,8 @@
             line-height: 1.5;
             color: #000000;
             margin: 0.4rem 0;
-            text-shadow: 1px 1px 2px rgba(255,255,200,0.7);
-            font-weight: 500;
+            text-shadow: 2px 2px 4px rgba(255,255,200,0.9);
+            font-weight: bold;
         }
 
         .divider {
@@ -127,7 +128,7 @@
             background: #000000;
             margin: 0.6rem auto;
             border-radius: 2px;
-            box-shadow: 0 0 4px rgba(255,255,200,0.5);
+            box-shadow: 0 0 6px rgba(255,255,200,0.8);
         }
 
         /* Estilo para el botón de premio */
@@ -195,22 +196,78 @@
             bottom: 15px;
             left: 15px;
             z-index: 4;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             color: #ffffff;
-            font-size: 0.6rem;
-            padding: 4px 10px;
+            font-size: 0.7rem;
+            padding: 5px 12px;
             border-radius: 20px;
             font-family: monospace;
             backdrop-filter: blur(4px);
             pointer-events: none;
-            opacity: 0.6;
+            opacity: 0.7;
+            font-weight: bold;
         }
 
-        /* Estilos para móvil */
+        /* ========== ESTILOS MEJORADOS PARA MÓVIL ========== */
         @media (max-width: 650px) {
             .credit-block {
-                width: 90%;
-                padding: 0.8rem 1.2rem;
+                width: 92%;
+                padding: 0.9rem 1rem;
+                margin-bottom: 1.8rem;
+            }
+            .credit-title {
+                font-size: 1.8rem;
+                font-weight: 900;
+                letter-spacing: 3px;
+                text-shadow: 2px 2px 5px rgba(255,255,200,1);
+                margin-bottom: 0.5rem;
+            }
+            .credit-text {
+                font-size: 1.2rem;
+                font-weight: 900;
+                line-height: 1.4;
+                text-shadow: 2px 2px 5px rgba(255,255,200,0.95);
+                margin: 0.3rem 0;
+            }
+            .credit-long {
+                font-size: 1.05rem;
+                font-weight: 900;
+                line-height: 1.4;
+                text-shadow: 2px 2px 5px rgba(255,255,200,0.95);
+                margin: 0.3rem 0;
+            }
+            .credit-sub {
+                font-size: 0.95rem;
+                font-weight: 700;
+                text-shadow: 1px 1px 4px rgba(255,255,200,0.9);
+                margin-top: 0.15rem;
+            }
+            .divider {
+                width: 70px;
+                height: 2px;
+                margin: 0.5rem auto;
+                background: #000000;
+                box-shadow: 0 0 6px rgba(255,255,200,0.9);
+            }
+            .medieval-prize-btn {
+                padding: 0.9rem 1.5rem;
+                font-size: 1.2rem;
+                letter-spacing: 2px;
+                white-space: nowrap;
+            }
+            .restart-hint {
+                font-size: 0.65rem;
+                bottom: 12px;
+                left: 12px;
+                padding: 4px 10px;
+            }
+        }
+
+        /* Para móviles muy pequeños (menos de 400px) */
+        @media (max-width: 480px) {
+            .credit-block {
+                width: 94%;
+                padding: 0.8rem 0.8rem;
                 margin-bottom: 1.5rem;
             }
             .credit-title {
@@ -219,29 +276,36 @@
             }
             .credit-text {
                 font-size: 1rem;
+                line-height: 1.35;
             }
             .credit-long {
                 font-size: 0.9rem;
+                line-height: 1.35;
             }
             .credit-sub {
                 font-size: 0.85rem;
             }
             .medieval-prize-btn {
-                padding: 0.9rem 1.5rem;
-                font-size: 1.1rem;
-                letter-spacing: 2px;
-                white-space: nowrap;
+                padding: 0.8rem 1.2rem;
+                font-size: 1rem;
+                letter-spacing: 1.5px;
             }
         }
 
-        @media (max-width: 480px) {
-            .medieval-prize-btn {
-                padding: 0.8rem 1.2rem;
-                font-size: 0.95rem;
-                letter-spacing: 1px;
+        /* Para tablets pequeñas */
+        @media (min-width: 651px) and (max-width: 900px) {
+            .credit-block {
+                width: 85%;
+                padding: 1rem 1.5rem;
             }
             .credit-title {
+                font-size: 1.9rem;
+            }
+            .credit-text {
                 font-size: 1.2rem;
+            }
+            .credit-long {
+                font-size: 1rem;
             }
         }
 
@@ -383,7 +447,7 @@
         let prizeShown = false;
         let animationTimeout = null;
         
-        // Velocidad: 90px/s (más lenta para disfrutar los créditos con calma)
+        // Velocidad: 90px/s (lenta para disfrutar los créditos)
         const SPEED = 90;
         
         // Calcular la duración exacta de la animación
@@ -422,11 +486,9 @@
         
         // Abrir la imagen de premio
         function openPrizeImage() {
-            // Abrir la imagen premio.jpeg en una nueva pestaña/ventana
             window.open('premio.jpeg', '_blank');
             console.log("📷 Abriendo imagen de premio: premio.jpeg");
             
-            // Feedback visual en el botón
             const originalText = prizeBtn.textContent;
             prizeBtn.textContent = '✨ ¡PREMIOS ABRIENDO! ✨';
             setTimeout(() => {
@@ -441,7 +503,6 @@
             const { duration, startTopPx, endTopPx } = calculateDuration();
             const animationMs = duration * 1000;
             
-            // Posición inicial
             creditsContainer.style.top = startTopPx + 'px';
             creditsContainer.style.position = 'absolute';
             
@@ -449,18 +510,13 @@
             prizeShown = false;
             prizeWrapper.classList.remove('show');
             
-            // Limpiar timeouts anteriores
             if (animationTimeout) {
                 clearTimeout(animationTimeout);
             }
             
-            // Configurar el temporizador para mostrar el botón EXACTAMENTE cuando termine la animación
             animationTimeout = setTimeout(() => {
-                // Asegurar posición final
                 creditsContainer.style.top = endTopPx + 'px';
-                // Mostrar botón
                 showPrizeButton();
-                // Cancelar el animationFrame si aún existe
                 if (animationFrameId) {
                     cancelAnimationFrame(animationFrameId);
                     animationFrameId = null;
@@ -472,14 +528,12 @@
                 const elapsed = currentTime - startTime;
                 let progress = Math.min(elapsed / animationMs, 1);
                 
-                // Calcular posición lineal
                 const currentTop = startTopPx - (progress * (startTopPx - endTopPx));
                 creditsContainer.style.top = currentTop + 'px';
                 
                 if (progress < 1) {
                     animationFrameId = requestAnimationFrame(animate);
                 } else {
-                    // Asegurar que al finalizar la animación se muestre el botón
                     creditsContainer.style.top = endTopPx + 'px';
                     if (!prizeShown) {
                         showPrizeButton();
@@ -496,13 +550,11 @@
             }
             animationFrameId = requestAnimationFrame(animate);
             
-            console.log(`🎬 Animación iniciada - Duración: ${(animationMs / 1000).toFixed(1)} segundos (${(animationMs / 1000 / 60).toFixed(1)} minutos)`);
-            console.log(`⏰ El botón aparecerá automáticamente al finalizar`);
+            console.log(`🎬 Animación iniciada - Duración: ${(animationMs / 1000).toFixed(1)} segundos`);
         }
         
         // Reiniciar animación
         function restartCredits() {
-            // Limpiar timers
             if (animationTimeout) {
                 clearTimeout(animationTimeout);
                 animationTimeout = null;
@@ -512,24 +564,21 @@
                 animationFrameId = null;
             }
             
-            // Ocultar botón
             prizeWrapper.classList.remove('show');
             prizeShown = false;
             
-            // Reiniciar animación
             startAnimation();
             
-            // Feedback visual
             const hint = document.querySelector('.restart-hint');
             if (hint) {
                 hint.style.opacity = '0.3';
-                setTimeout(() => { if(hint) hint.style.opacity = '0.6'; }, 300);
+                setTimeout(() => { if(hint) hint.style.opacity = '0.7'; }, 300);
             }
             
             console.log("🔄 Créditos reiniciados");
         }
         
-        // Configurar el botón de premio para abrir la imagen
+        // Configurar el botón de premio
         function setupPrizeButton() {
             if (prizeBtn) {
                 prizeBtn.addEventListener('click', function() {
@@ -543,9 +592,7 @@
             startAnimation();
             setupPrizeButton();
             console.log("=== INICIALIZADO ===");
-            console.log(`Velocidad: ${SPEED}px/s (muy lenta para disfrutar los créditos con calma)`);
-            console.log("El botón aparecerá automáticamente cuando terminen los créditos");
-            console.log("Al hacer clic en el botón, se abrirá la imagen premio.jpeg");
+            console.log(`Velocidad: ${SPEED}px/s - Letras optimizadas para móvil`);
         }
         
         init();
