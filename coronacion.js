@@ -68,30 +68,9 @@ document.addEventListener('DOMContentLoaded', function () {
         playButton.style.display = 'none';
     });
 
-    // Evento para el botón de premio - Versión mejorada
+    // Evento para el botón de premio - Redirige a premio.html
     mapaButton.addEventListener('click', function () {
-        // Intentar con diferentes extensiones
-        const posiblesNombres = ['premio.jpeg', 'premio.jpg', 'premio.JPG', 'premio.JPEG'];
-        let intento = 0;
-        
-        function intentarCargar() {
-            if (intento < posiblesNombres.length) {
-                const img = new Image();
-                img.onload = function() {
-                    // Si la imagen carga, redirigir
-                    window.location.href = posiblesNombres[intento];
-                };
-                img.onerror = function() {
-                    intento++;
-                    intentarCargar();
-                };
-                img.src = posiblesNombres[intento];
-            } else {
-                alert('No se pudo encontrar la imagen del premio. Verifica que el archivo existe en el repositorio.');
-            }
-        }
-        
-        intentarCargar();
+        window.location.href = 'premio.html';
     });
 
     // Manejar cambios en pantalla completa
@@ -118,3 +97,4 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error('Error al cargar el video. Verifica que el archivo "coronacion.mp4" existe.');
     });
 });
+ 
