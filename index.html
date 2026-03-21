@@ -9,23 +9,7 @@
 <body>
   <div class="container">
     <h1>El Códice Secreto de Segovia</h1>
-    <button id="start-button">Comienza la aventura</button>
+    <button id="start-button" onclick="location.href='instrucciones.html'" >Comienza la aventura  </button>
   </div>
-
-  <!-- Botón para controlar el audio (mostrar icono de reproducir/pausar según el estado del audio) -->
-  <button id="pause-button" class="pause-button">
-    <img id="audio-icon" src="sinsonido.png" alt="Pausar/Reproducir" class="icon">
-  </button>
-
-  <audio id="background-music" loop>
-    <source src="fondo.mp3" type="audio/mpeg">
-  </audio>
-
-  <!-- Audio para el clic del botón -->
-  <audio id="entrada-sound">
-    <source src="entrada.mp3" type="audio/mpeg">
-  </audio>
-
-  <script src="script.js"></script>
 </body>
 </html>
