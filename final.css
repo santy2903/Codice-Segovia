@@ -1,72 +1,87 @@
-/* Estilo base para el body */
-body {
+/* ========== RESET GLOBAL ========== */
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+/* ========== BODY ========== */
+body {
+  margin: 0;
+  padding: 16px;
+  min-height: 100vh;
+  height: 100vh;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  font-family: Arial, sans-serif;
   background-color: black;
   background-image: url('criptex.jpg');
   background-size: cover;
   background-position: center;
-  color: rgb(255, 255, 255);
-  font-family: Arial, sans-serif;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   background-repeat: no-repeat;
-  flex-direction: column;
 }
 
-/* Estilos de la caja contenedora */
-.container {
-  background: rgba(0, 0, 0, 0.7);
-  padding: 40px;
-  border-radius: 10px;
-  text-align: center;
-  max-width: 80%;
-  margin: auto;
-}
-
-/* Estilo del título */
+/* ========== TÍTULOS ========== */
 h1 {
-  margin-bottom: 20px;
-  font-size: 2.5rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  font-size: clamp(1.4rem, 6vw, 2rem);
+  line-height: 1.3;
+  text-shadow: 0 2px 6px black;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin: 0;
+  width: 100%;
 }
 
-/* Estilos para el botón "Jugar" */
-#mapaButton {
-  font-size: 1.5rem;
-  padding: 12px 30px;
-  cursor: pointer;
-  border: none;
-  background-color: #ff5733;
-  color: white;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-  margin-top: 20px;
+h2 {
+  line-height: 40px;
 }
 
-#mapaButton:hover {
-  background-color: #c74527;
+/* ========== CONTENEDOR PRINCIPAL ========== */
+.container {
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(2px);
+  width: 100%;
+  max-width: 500px;
+  padding: 20px 16px 28px;
+  border-radius: 28px;
+  text-align: center;
+  margin: 100px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
 }
 
-/* Estilo para el contenedor del video */
+/* ========== VIDEO ========== */
 .video-wrapper {
   position: relative;
   width: 100%;
   max-width: 640px;
+  aspect-ratio: 16 / 9;
   margin-bottom: 20px;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  background-color: #111;
 }
 
 .video {
   width: 100%;
+  height: 100%;
   height: auto;
+  display: block;
+  object-fit: cover;
+  background: #000;
   border-radius: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-/* Estilo para el botón de pausa/reproducción */
+/* ========== BOTÓN PAUSA ========== */
 .pause-button {
   position: absolute;
   top: 20px;
@@ -77,36 +92,187 @@ h1 {
   cursor: pointer;
 }
 
+/* ========== BOTÓN PLAY PERSONALIZADO ========== */
+.custom-play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70px;
+  height: 70px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, background-color 0.2s;
+  z-index: 15;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.custom-play-button:hover {
+  background-color: #ffffff;
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+.custom-play-button:active {
+  transform: translate(-50%, -50%) scale(0.95);
+}
+
+.play-icon {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 16px 0 16px 28px;
+  border-color: transparent transparent transparent #ff5733;
+  margin-left: 6px;
+}
+
+.video-wrapper.playing .custom-play-button {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+/* ========== MENSAJE ========== */
+.guardian-message {
+  width: 100%;
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 1px 4px black;
+  background: rgba(255, 87, 51, 0.25);
+  padding: 16px 14px;
+  border-radius: 60px;
+  border-left: 4px solid #ff5733;
+  border-right: 4px solid #ff5733;
+}
+
+/* ========== PASSWORD ========== */
+.password-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.password-input {
+  width: 100%;
+  padding: 16px 20px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 60px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+  color: white;
+  text-align: center;
+  letter-spacing: 2px;
+  border: 2px solid rgba(255, 87, 51, 0.6);
+  outline: none;
+  transition: border 0.2s;
+}
+
+.password-input:focus {
+  border-color: #ff5733;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.password-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+  letter-spacing: normal;
+}
+
+/* ========== BOTÓN PRINCIPAL ========== */
+#mapaButton {
+  width: 100%;
+  font-size: 1.8rem;
+  font-weight: bold;
+  padding: 16px 20px;
+  cursor: pointer;
+  border: none;
+  background-color: #ff5733;
+  color: white;
+  border-radius: 60px;
+  transition: background-color 0.2s, opacity 0.2s;
+  margin-top: 8px;
+  box-shadow: 0 6px 0 #a13e1f;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+#mapaButton:hover {
+  background-color: #c74527;
+}
+
+#mapaButton.enabled {
+  opacity: 1;
+  pointer-events: auto;
+  background-color: #ff5733;
+}
+
+#mapaButton.enabled:hover {
+  background-color: #ff6f4a;
+}
+
+#mapaButton.enabled:active {
+  transform: translateY(3px);
+  box-shadow: 0 3px 0 #a13e1f;
+}
+
 .mapaButton:hover {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Ajuste del tamaño del icono dentro del botón */
+/* ========== ÍCONO ========== */
 .icon {
   width: 50px;
   height: 50px;
 }
 
-/* Estilo para dispositivos móviles */
+/* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
   body {
     background-image: url('criptex.jpg');
     background-size: cover;
   }
 
-  /* Titulo más pequeño en dispositivos móviles */
   h1 {
     font-size: 2rem;
   }
 
-  /* Video se ajusta a la pantalla en móvil */
   .video-wrapper {
     max-width: 100%;
   }
 
-  /* Botón "Jugar" más pequeño */
   #mapaButton {
     font-size: 1.2rem;
     padding: 8px 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  .container {
+    padding: 16px 12px 20px;
+  }
+
+  .custom-play-button {
+    width: 60px;
+    height: 60px;
+  }
+
+  .play-icon {
+    border-width: 12px 0 12px 22px;
+  }
+
+  .guardian-message {
+    font-size: 1rem;
   }
 }
