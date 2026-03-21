@@ -417,7 +417,7 @@
             <div class="credit-text">Dani, Lidia, Diego, Elena,</div>
             <div class="credit-text">Manu, Ana Maria,</div>
             <div class="credit-text">Oscar y Yolanda Vera,</div>
-            <div class="credit-text">Los, ya legendarios y eternos,</div>
+            <div class="credit-text">Los, ya legendarios, Buscadores de Verdades</div>
             <div class="credit-text">"Buscadores de Verdades",</div>
             <div class="credit-text">Por participar en el juego</div>
         </div>
@@ -479,8 +479,9 @@
         let prizeShown = false;
         let animationTimeout = null;
         
-        // Velocidad: 90px/s (lenta para disfrutar los créditos)
-        const SPEED = 90;
+        // 🐢 VELOCIDAD MÁS LENTA: 45 píxeles por segundo (antes 90px/s)
+        // Esto hace que los créditos duren el doble de tiempo, creando una experiencia más pausada y épica
+        const SPEED = 45;
         
         // Calcular la duración exacta de la animación
         function calculateDuration() {
@@ -497,11 +498,11 @@
             const distance = startTopPx - endTopPx;
             const duration = distance / SPEED;
             
-            console.log(`=== DATOS ANIMACIÓN ===`);
+            console.log(`=== DATOS ANIMACIÓN (MODO LENTO) ===`);
             console.log(`Altura créditos: ${creditsHeight}px`);
             console.log(`Altura ventana: ${windowHeight}px`);
             console.log(`Distancia a recorrer: ${distance}px`);
-            console.log(`Velocidad: ${SPEED}px/s`);
+            console.log(`Velocidad: ${SPEED}px/s (estilo cinematográfico)`);
             console.log(`Duración: ${duration.toFixed(2)} segundos (${(duration / 60).toFixed(1)} minutos)`);
             
             return { duration, startTopPx, endTopPx, distance };
@@ -582,7 +583,7 @@
             }
             animationFrameId = requestAnimationFrame(animate);
             
-            console.log(`🎬 Animación iniciada - Duración: ${(animationMs / 1000).toFixed(1)} segundos`);
+            console.log(`🎬 Animación iniciada - Duración: ${(animationMs / 1000).toFixed(1)} segundos (${SPEED}px/s)`);
         }
         
         // Reiniciar animación
@@ -624,7 +625,7 @@
             startAnimation();
             setupPrizeButton();
             console.log("=== INICIALIZADO ===");
-            console.log("Velocidad: 30px/s");
+            console.log("🐢 Velocidad: 45px/s (modo lento y cinematográfico)");
             console.log("Móvil: tipografía Georgia/Times (más legible)");
             console.log("Escritorio: tipografía medieval");
         }
