@@ -35,14 +35,14 @@
             z-index: 1;
         }
 
-        /* Capa de superposición más oscura para mejorar contraste en móvil */
+        /* Capa de superposición más oscura para mejorar contraste */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.5) 100%);
+            background: radial-gradient(circle, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%);
             z-index: 2;
             pointer-events: none;
         }
@@ -66,7 +66,7 @@
             padding-bottom: 2rem;
         }
 
-        /* Estilo base de cada bloque de crédito - LETRAS NEGRAS CON SOMBRA */
+        /* Estilo base de cada bloque de crédito */
         .credit-block {
             display: block;
             margin: 0 auto 2rem auto;
@@ -79,9 +79,7 @@
             box-shadow: none;
             border-left: none;
             border-right: none;
-            font-family: 'MedievalSharp', 'UnifrakturCook', cursive;
             color: #000000;
-            text-shadow: 2px 2px 4px rgba(255,255,200,0.9);
             letter-spacing: 1px;
             opacity: 1;
         }
@@ -91,7 +89,7 @@
             font-weight: bold;
             margin-bottom: 0.6rem;
             color: #000000;
-            text-shadow: 2px 2px 4px rgba(255,255,200,0.9);
+            text-shadow: 2px 2px 6px rgba(255,255,200,0.9);
             letter-spacing: 4px;
         }
 
@@ -101,7 +99,7 @@
             font-weight: bold;
             color: #000000;
             margin: 0.25rem 0;
-            text-shadow: 2px 2px 4px rgba(255,255,200,0.9);
+            text-shadow: 2px 2px 6px rgba(255,255,200,0.9);
         }
 
         .credit-sub {
@@ -109,7 +107,7 @@
             font-style: italic;
             color: #000000;
             margin-top: 0.2rem;
-            text-shadow: 1px 1px 3px rgba(255,255,200,0.8);
+            text-shadow: 1px 1px 4px rgba(255,255,200,0.8);
             font-weight: 600;
         }
 
@@ -118,7 +116,7 @@
             line-height: 1.5;
             color: #000000;
             margin: 0.4rem 0;
-            text-shadow: 2px 2px 4px rgba(255,255,200,0.9);
+            text-shadow: 2px 2px 6px rgba(255,255,200,0.9);
             font-weight: bold;
         }
 
@@ -208,86 +206,116 @@
             font-weight: bold;
         }
 
-        /* ========== ESTILOS MEJORADOS PARA MÓVIL ========== */
-        @media (max-width: 650px) {
+        /* ========== ESTILOS PARA ESCRITORIO (tipografía medieval) ========== */
+        @media (min-width: 651px) {
             .credit-block {
-                width: 92%;
-                padding: 0.9rem 1rem;
-                margin-bottom: 1.8rem;
+                font-family: 'MedievalSharp', 'UnifrakturCook', cursive;
             }
             .credit-title {
-                font-size: 1.8rem;
-                font-weight: 900;
-                letter-spacing: 3px;
-                text-shadow: 2px 2px 5px rgba(255,255,200,1);
-                margin-bottom: 0.5rem;
+                font-family: 'MedievalSharp', 'UnifrakturCook', cursive;
             }
             .credit-text {
-                font-size: 1.2rem;
-                font-weight: 900;
-                line-height: 1.4;
-                text-shadow: 2px 2px 5px rgba(255,255,200,0.95);
-                margin: 0.3rem 0;
-            }
-            .credit-long {
-                font-size: 1.05rem;
-                font-weight: 900;
-                line-height: 1.4;
-                text-shadow: 2px 2px 5px rgba(255,255,200,0.95);
-                margin: 0.3rem 0;
+                font-family: 'MedievalSharp', 'UnifrakturCook', cursive;
             }
             .credit-sub {
-                font-size: 0.95rem;
+                font-family: 'MedievalSharp', 'UnifrakturCook', cursive;
+            }
+            .credit-long {
+                font-family: 'MedievalSharp', 'UnifrakturCook', cursive;
+            }
+        }
+
+        /* ========== ESTILOS MEJORADOS PARA MÓVIL ========== */
+        /* Tipografía más legible para móvil: Georgia, Times, serif */
+        @media (max-width: 650px) {
+            .credit-block {
+                width: 94%;
+                padding: 1rem 1rem;
+                margin-bottom: 1.8rem;
+                font-family: 'Georgia', 'Times New Roman', 'Palatino', 'Book Antiqua', serif;
+            }
+            .credit-title {
+                font-size: 2rem;
+                font-weight: 900;
+                letter-spacing: 2px;
+                text-shadow: 3px 3px 8px rgba(0,0,0,0.5);
+                color: #000000;
+                margin-bottom: 0.5rem;
+                font-family: 'Georgia', 'Times New Roman', serif;
+            }
+            .credit-text {
+                font-size: 1.35rem;
+                font-weight: 900;
+                line-height: 1.4;
+                text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+                color: #000000;
+                margin: 0.4rem 0;
+                font-family: 'Georgia', 'Times New Roman', serif;
+            }
+            .credit-long {
+                font-size: 1.2rem;
+                font-weight: 900;
+                line-height: 1.4;
+                text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+                color: #000000;
+                margin: 0.4rem 0;
+                font-family: 'Georgia', 'Times New Roman', serif;
+            }
+            .credit-sub {
+                font-size: 1rem;
                 font-weight: 700;
-                text-shadow: 1px 1px 4px rgba(255,255,200,0.9);
-                margin-top: 0.15rem;
+                text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+                color: #000000;
+                margin-top: 0.2rem;
+                font-family: 'Georgia', 'Times New Roman', serif;
+                font-style: italic;
             }
             .divider {
-                width: 70px;
+                width: 80px;
                 height: 2px;
-                margin: 0.5rem auto;
+                margin: 0.6rem auto;
                 background: #000000;
-                box-shadow: 0 0 6px rgba(255,255,200,0.9);
+                box-shadow: 0 0 6px rgba(0,0,0,0.3);
             }
             .medieval-prize-btn {
-                padding: 0.9rem 1.5rem;
-                font-size: 1.2rem;
+                padding: 1rem 1.8rem;
+                font-size: 1.3rem;
                 letter-spacing: 2px;
                 white-space: nowrap;
             }
             .restart-hint {
-                font-size: 0.65rem;
+                font-size: 0.7rem;
                 bottom: 12px;
                 left: 12px;
-                padding: 4px 10px;
+                padding: 5px 12px;
             }
         }
 
-        /* Para móviles muy pequeños (menos de 400px) */
+        /* Para móviles muy pequeños (menos de 480px) */
         @media (max-width: 480px) {
             .credit-block {
-                width: 94%;
-                padding: 0.8rem 0.8rem;
+                width: 96%;
+                padding: 0.9rem 0.8rem;
                 margin-bottom: 1.5rem;
             }
             .credit-title {
-                font-size: 1.5rem;
-                letter-spacing: 2px;
+                font-size: 1.7rem;
+                letter-spacing: 1px;
             }
             .credit-text {
-                font-size: 1rem;
+                font-size: 1.2rem;
                 line-height: 1.35;
             }
             .credit-long {
-                font-size: 0.9rem;
+                font-size: 1.05rem;
                 line-height: 1.35;
             }
             .credit-sub {
-                font-size: 0.85rem;
+                font-size: 0.9rem;
             }
             .medieval-prize-btn {
-                padding: 0.8rem 1.2rem;
-                font-size: 1rem;
+                padding: 0.9rem 1.3rem;
+                font-size: 1.1rem;
                 letter-spacing: 1.5px;
             }
         }
@@ -592,7 +620,9 @@
             startAnimation();
             setupPrizeButton();
             console.log("=== INICIALIZADO ===");
-            console.log(`Velocidad: ${SPEED}px/s - Letras optimizadas para móvil`);
+            console.log("Velocidad: 90px/s");
+            console.log("Móvil: tipografía Georgia/Times (más legible)");
+            console.log("Escritorio: tipografía medieval");
         }
         
         init();
