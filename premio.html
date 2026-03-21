@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Créditos Épicos - Producción Hispano-Colombiana</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #0a0704;
+            font-family: 'MedievalSharp', 'UnifrakturCook', 'Courier New', cursive;
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Contenedor del fondo */
+        .cinema-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('criptex.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            z-index: 1;
+        }
+
+        /* Capa de superposición muy sutil */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,200,0.1) 0%, rgba(200,180,120,0.05) 100%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Contenedor de créditos */
+        .credits-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .scrolling-credits {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            padding-bottom: 2rem;
+        }
+
+        /* Estilo de cada bloque de crédito - TODAS LAS LETRAS NEGRAS */
+        .credit-block {
+            display: block;
+            margin: 0 auto 2rem auto;
+            max-width: 85%;
+            width: 700px;
+            background: transparent;
+            backdrop-filter: none;
+            border-radius: 0;
+            padding: 1rem 1.8rem;
+            box-shadow: none;
+            border-left: none;
+            border-right: none;
+            font-family: 'MedievalSharp', 'UnifrakturCook', cursive;
+            color: #000000;
+            text-shadow: 1px 1px 2px rgba(255,255,200,0.7);
+            letter-spacing: 1px;
+            opacity: 1;
+        }
+
+        .credit-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.6rem;
+            color: #000000;
+            text-shadow: 1px 1px 2px rgba(255,255,200,0.6);
+            letter-spacing: 4px;
+        }
+
+        .credit-text {
+            font-size: 1.25rem;
+            line-height: 1.5;
+            font-weight: bold;
+            color: #000000;
+            margin: 0.25rem 0;
+            text-shadow: 1px 1px 2px rgba(255,255,200,0.7);
+        }
+
+        .credit-sub {
+            font-size: 1rem;
+            font-style: italic;
+            color: #000000;
+            margin-top: 0.2rem;
+            text-shadow: 1px 1px 2px rgba(255,255,200,0.6);
+        }
+
+        .credit-long {
+            font-size: 1.05rem;
+            line-height: 1.5;
+            color: #000000;
+            margin: 0.4rem 0;
+            text-shadow: 1px 1px 2px rgba(255,255,200,0.7);
+            font-weight: 500;
+        }
+
+        .divider {
+            width: 100px;
+            height: 2px;
+            background: #000000;
+            margin: 0.6rem auto;
+            border-radius: 2px;
+            box-shadow: 0 0 4px rgba(255,255,200,0.5);
+        }
+
+        /* Estilo para el botón de premio */
+        .prize-button-wrapper {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+            animation: fadeIn 0.8s ease-out;
+            display: none;
+        }
+
+        .prize-button-wrapper.show {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .medieval-prize-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #2c2418, #1f1a10);
+            border: 3px solid #e6d5a8;
+            border-radius: 60px;
+            padding: 1.2rem 2.8rem;
+            font-family: 'MedievalSharp', 'UnifrakturCook', cursive;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #f7e9c3;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,200,0.3);
+            backdrop-filter: blur(8px);
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .medieval-prize-btn:hover {
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #3e3424, #2c2418);
+            border-color: #ffefcf;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+            color: #ffe6aa;
+            cursor: pointer;
+        }
+
+        .medieval-prize-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Indicador de reinicio */
+        .restart-hint {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            z-index: 4;
+            background: rgba(0,0,0,0.5);
+            color: #ffffff;
+            font-size: 0.6rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-family: monospace;
+            backdrop-filter: blur(4px);
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* Estilos para móvil */
+        @media (max-width: 650px) {
+            .credit-block {
+                width: 90%;
+                padding: 0.8rem 1.2rem;
+                margin-bottom: 1.5rem;
+            }
+            .credit-title {
+                font-size: 1.5rem;
+                letter-spacing: 2px;
+            }
+            .credit-text {
+                font-size: 1rem;
+            }
+            .credit-long {
+                font-size: 0.9rem;
+            }
+            .credit-sub {
+                font-size: 0.85rem;
+            }
+            .medieval-prize-btn {
+                padding: 0.9rem 1.5rem;
+                font-size: 1.1rem;
+                letter-spacing: 2px;
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .medieval-prize-btn {
+                padding: 0.8rem 1.2rem;
+                font-size: 0.95rem;
+                letter-spacing: 1px;
+            }
+            .credit-title {
+                font-size: 1.2rem;
+            }
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+    </style>
+</head>
+<body>
+
+<div class="cinema-container" id="cinemaBg"></div>
+<div class="overlay"></div>
+
+<div class="credits-wrapper">
+    <div class="scrolling-credits" id="scrollingCredits">
+        
+        <div class="credit-block">
+            <div class="credit-title">✦ C R É D I T O S ✦</div>
+            <div class="divider"></div>
+            <div class="credit-text">Una experiencia cinematográfica</div>
+            <div class="credit-sub">Épica medieval y moderna</div>
+        </div>
+
+        <div class="credit-block">
+            <div class="credit-title">★ PRODUCIDO POR ★</div>
+            <div class="credit-text">Santy Fernandez</div>
+            <div class="divider"></div>
+            <div class="credit-sub">Bajo el sello de la Hermandad Audiovisual</div>
+        </div>
+
+        <div class="credit-block">
+            <div class="credit-title">✧ MAQUETADO POR ✧</div>
+            <div class="credit-text">Camilo Melo y Santy Fernandez</div>
+            <div class="credit-sub">Arquitectos de la puesta en escena</div>
+        </div>
+
+        <div class="credit-block">
+            <div class="credit-title">📜 GUIÓN 📜</div>
+            <div class="credit-text">Santy Fernandez</div>
+            <div class="credit-sub">Palabras tejidas con tinta y pasión</div>
+        </div>
+
+        <div class="credit-block">
+            <div class="credit-title">⚙️ PROGRAMACIÓN ⚙️</div>
+            <div class="credit-text">Camilo Melo y Santy Fernandez</div>
+            <div class="credit-sub">Hechicería digital y código ancestral</div>
+        </div>
+
+        <div class="credit-block">
+            <div class="credit-title">🎙️ VOCES EN OFF 🎙️</div>
+            <div class="credit-text">IA Chat GPT</div>
+            <div class="credit-sub">Narraciones desde el éter digital</div>
+        </div>
+
+        <div class="credit-block">
+            <div class="credit-title">📷 FOTO FIJA 📷</div>
+            <div class="credit-text">IA Gemini</div>
+            <div class="credit-sub">Instantáneas forjadas por inteligencia</div>
+        </div>
+
+        <div class="credit-block">
+            <div class="credit-title">🎬 VIDEO 🎬</div>
+            <div class="credit-text">IA Pippit</div>
+            <div class="credit-sub">Movimiento y memoria visual</div>
+        </div>
+
+        <div class="credit-block">
+            <div class="credit-title">🌎 PRODUCCIÓN 🌎</div>
+            <div class="credit-text">Hispano-Colombiana</div>
+            <div class="credit-sub">Uniendo tierras y corazones</div>
+        </div>
+
+        <div class="credit-block">
+            <div class="credit-title">⚔️ DERECHOS ⚔️</div>
+            <div class="credit-text">Reservados todos los derechos</div>
+            <div class="credit-sub">Protección bajo el sello del Criptex</div>
+        </div>
+
+        <div class="credit-block">
+            <div class="credit-title">🙏 AGRADECIMIENTOS 🙏</div>
+            <div class="credit-text">Gracias a Cris, Carlos, María, Susana, Nuria, Marcos,</div>
+            <div class="credit-text">Dani, Lidia, Diego, Elena, Manu, Ana María,</div>
+            <div class="credit-text">Oscar y Yolanda Vera</div>
+            <div class="credit-sub">Por participar en el juego</div>
+        </div>
+
+        <div class="credit-block">
+            <div class="credit-title">🕯️ MENCIÓN ESPECIAL 🕯️</div>
+            <div class="credit-text">Gracias a Yoly Vera</div>
+            <div class="credit-text">por aguantar las horas delante del ordenador</div>
+            <div class="credit-text">en la creación de este juego</div>
+            <div class="credit-sub">Paciencia y dedicación infinitas</div>
+        </div>
+
+        <div class="credit-block">
+            <div class="credit-title">🤖 CREACIÓN CON IA 🤖</div>
+            <div class="credit-long">Todas las imágenes, voces y videos,</div>
+            <div class="credit-long">se han creado con inteligencia artificial</div>
+            <div class="credit-long">y no se han usado fotografías reales para su creación.</div>
+            <div class="credit-long">Simplemente descripciones</div>
+            <div class="credit-sub">(A la vista está, que salgo con pelo)</div>
+        </div>
+
+        <div class="credit-block">
+            <div class="credit-title">❤️ UN MENSAJE DEL ALMA ❤️</div>
+            <div class="credit-long">Espero que hayáis disfrutado de la ciudad</div>
+            <div class="credit-long">de una manera diferente</div>
+            <div class="credit-long">y que la hayáis amado en este tiempo,</div>
+            <div class="credit-long">por lo menos una cuarta parte</div>
+            <div class="credit-long">de la que yo la amo.</div>
+            <div class="divider"></div>
+            <div class="credit-sub">Con gratitud eterna</div>
+        </div>
+
+        <div class="credit-block">
+            <div class="credit-title">⛭ F I N ⛭</div>
+            <div class="credit-text">Que el Criptex guarde tu esencia</div>
+            <div class="credit-sub">Hasta el próximo juego</div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Contenedor del botón de premio -->
+<div class="prize-button-wrapper" id="prizeButtonWrapper">
+    <button class="medieval-prize-btn" id="claimPrizeBtn">🏆 RECOGED VUESTRO PREMIO 🏆</button>
+</div>
+
+<div class="restart-hint">
+    ✦ Doble clic o tecla R para reiniciar ✦
+</div>
+
+<script>
+    (function() {
+        const creditsContainer = document.getElementById('scrollingCredits');
+        const prizeWrapper = document.getElementById('prizeButtonWrapper');
+        const prizeBtn = document.getElementById('claimPrizeBtn');
+        
+        let animationFrameId = null;
+        let startTime = null;
+        let prizeShown = false;
+        let animationTimeout = null;
+        
+        // Velocidad: 90px/s (más lenta para disfrutar los créditos con calma)
+        const SPEED = 90;
+        
+        // Calcular la duración exacta de la animación
+        function calculateDuration() {
+            if (!creditsContainer) return 20;
+            
+            const creditsHeight = creditsContainer.scrollHeight;
+            const windowHeight = window.innerHeight;
+            
+            // Posición inicial: el primer bloque comienza en el borde inferior
+            const startTopPx = windowHeight;
+            // Posición final: el último bloque sale completamente por arriba
+            const endTopPx = -creditsHeight;
+            
+            const distance = startTopPx - endTopPx;
+            const duration = distance / SPEED;
+            
+            console.log(`=== DATOS ANIMACIÓN ===`);
+            console.log(`Altura créditos: ${creditsHeight}px`);
+            console.log(`Altura ventana: ${windowHeight}px`);
+            console.log(`Distancia a recorrer: ${distance}px`);
+            console.log(`Velocidad: ${SPEED}px/s`);
+            console.log(`Duración: ${duration.toFixed(2)} segundos (${(duration / 60).toFixed(1)} minutos)`);
+            
+            return { duration, startTopPx, endTopPx, distance };
+        }
+        
+        // Mostrar el botón de premio
+        function showPrizeButton() {
+            if (!prizeShown) {
+                prizeShown = true;
+                prizeWrapper.classList.add('show');
+                console.log("🏆 BOTÓN DE PREMIO VISIBLE - Créditos finalizados");
+            }
+        }
+        
+        // Abrir la imagen de premio
+        function openPrizeImage() {
+            // Abrir la imagen premio.jpeg en una nueva pestaña/ventana
+            window.open('premio.jpeg', '_blank');
+            console.log("📷 Abriendo imagen de premio: premio.jpeg");
+            
+            // Feedback visual en el botón
+            const originalText = prizeBtn.textContent;
+            prizeBtn.textContent = '✨ ¡PREMIOS ABRIENDO! ✨';
+            setTimeout(() => {
+                if (prizeBtn) prizeBtn.textContent = originalText;
+            }, 2000);
+        }
+        
+        // Iniciar animación con requestAnimationFrame
+        function startAnimation() {
+            if (!creditsContainer) return;
+            
+            const { duration, startTopPx, endTopPx } = calculateDuration();
+            const animationMs = duration * 1000;
+            
+            // Posición inicial
+            creditsContainer.style.top = startTopPx + 'px';
+            creditsContainer.style.position = 'absolute';
+            
+            startTime = performance.now();
+            prizeShown = false;
+            prizeWrapper.classList.remove('show');
+            
+            // Limpiar timeouts anteriores
+            if (animationTimeout) {
+                clearTimeout(animationTimeout);
+            }
+            
+            // Configurar el temporizador para mostrar el botón EXACTAMENTE cuando termine la animación
+            animationTimeout = setTimeout(() => {
+                // Asegurar posición final
+                creditsContainer.style.top = endTopPx + 'px';
+                // Mostrar botón
+                showPrizeButton();
+                // Cancelar el animationFrame si aún existe
+                if (animationFrameId) {
+                    cancelAnimationFrame(animationFrameId);
+                    animationFrameId = null;
+                }
+                console.log("✅ Animación completada por temporizador");
+            }, animationMs);
+            
+            function animate(currentTime) {
+                const elapsed = currentTime - startTime;
+                let progress = Math.min(elapsed / animationMs, 1);
+                
+                // Calcular posición lineal
+                const currentTop = startTopPx - (progress * (startTopPx - endTopPx));
+                creditsContainer.style.top = currentTop + 'px';
+                
+                if (progress < 1) {
+                    animationFrameId = requestAnimationFrame(animate);
+                } else {
+                    // Asegurar que al finalizar la animación se muestre el botón
+                    creditsContainer.style.top = endTopPx + 'px';
+                    if (!prizeShown) {
+                        showPrizeButton();
+                    }
+                    if (animationFrameId) {
+                        cancelAnimationFrame(animationFrameId);
+                        animationFrameId = null;
+                    }
+                }
+            }
+            
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+            }
+            animationFrameId = requestAnimationFrame(animate);
+            
+            console.log(`🎬 Animación iniciada - Duración: ${(animationMs / 1000).toFixed(1)} segundos (${(animationMs / 1000 / 60).toFixed(1)} minutos)`);
+            console.log(`⏰ El botón aparecerá automáticamente al finalizar`);
+        }
+        
+        // Reiniciar animación
+        function restartCredits() {
+            // Limpiar timers
+            if (animationTimeout) {
+                clearTimeout(animationTimeout);
+                animationTimeout = null;
+            }
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            }
+            
+            // Ocultar botón
+            prizeWrapper.classList.remove('show');
+            prizeShown = false;
+            
+            // Reiniciar animación
+            startAnimation();
+            
+            // Feedback visual
+            const hint = document.querySelector('.restart-hint');
+            if (hint) {
+                hint.style.opacity = '0.3';
+                setTimeout(() => { if(hint) hint.style.opacity = '0.6'; }, 300);
+            }
+            
+            console.log("🔄 Créditos reiniciados");
+        }
+        
+        // Configurar el botón de premio para abrir la imagen
+        function setupPrizeButton() {
+            if (prizeBtn) {
+                prizeBtn.addEventListener('click', function() {
+                    openPrizeImage();
+                });
+            }
+        }
+        
+        // Inicializar
+        function init() {
+            startAnimation();
+            setupPrizeButton();
+            console.log("=== INICIALIZADO ===");
+            console.log(`Velocidad: ${SPEED}px/s (muy lenta para disfrutar los créditos con calma)`);
+            console.log("El botón aparecerá automáticamente cuando terminen los créditos");
+            console.log("Al hacer clic en el botón, se abrirá la imagen premio.jpeg");
+        }
+        
+        init();
+        
+        // Eventos para reiniciar
+        window.addEventListener('keydown', function(e) {
+            if (e.key === 'r' || e.key === 'R') {
+                e.preventDefault();
+                restartCredits();
+            }
+        });
+        
+        document.body.addEventListener('dblclick', function(e) {
+            restartCredits();
+        });
+        
+        let lastTouch = 0;
+        document.body.addEventListener('touchstart', function(e) {
+            const now = Date.now();
+            if (now - lastTouch < 300) {
+                e.preventDefault();
+                restartCredits();
+            }
+            lastTouch = now;
+        });
+        
+        // Verificar imagen de fondo
+        const bgDiv = document.getElementById('cinemaBg');
+        const imgTest = new Image();
+        imgTest.onerror = function() {
+            bgDiv.style.background = "linear-gradient(135deg, #d4c4a8, #b8a87c)";
+            bgDiv.style.backgroundSize = "cover";
+        };
+        imgTest.src = 'criptex.jpg';
+        bgDiv.style.backgroundColor = '#c4b28a';
+        
+        // Recalcular si la ventana cambia de tamaño
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                if (!prizeShown) {
+                    restartCredits();
+                }
+            }, 300);
+        });
+    })();
+</script>
+</body>
+</html>
