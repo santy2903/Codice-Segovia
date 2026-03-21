@@ -37,15 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
   actualizarBotones();
   activarBotonContinuar(); // Verifica si todas las respuestas están completas y habilita el botón
 
-  const btnReiniciar = document.getElementById("reiniciar");
   const continuarBtn = document.getElementById("continuarBtn");
 
-  // Reiniciar el progreso
-  btnReiniciar.addEventListener("click", () => {
-    localStorage.clear(); // Si se presiona el botón de reiniciar, borra el progreso
-    actualizarBotones();
-    activarBotonContinuar(); // Vuelve a comprobar si todas las respuestas están correctas
-  });
 
   // Redirigir a final.html cuando el botón Continuar esté habilitado
   continuarBtn.addEventListener("click", () => {
