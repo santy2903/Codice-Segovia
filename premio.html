@@ -129,6 +129,115 @@
             box-shadow: 0 0 6px rgba(255,255,200,0.8);
         }
 
+        /* Estilo para el contenedor de banderas con colores reales */
+        .flags-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 0.8rem 0;
+            flex-wrap: wrap;
+        }
+
+        .flag-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .flag-label {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #000000;
+            text-shadow: 1px 1px 2px rgba(255,255,200,0.7);
+            letter-spacing: 1px;
+        }
+
+        /* Bandera de Colombia - Diseño con colores reales */
+        .flag-colombia {
+            width: 80px;
+            height: 50px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,215,0,0.5);
+        }
+
+        .colombia-yellow {
+            background-color: #FCD116;
+            height: 50%;
+            width: 100%;
+        }
+
+        .colombia-blue {
+            background-color: #003893;
+            height: 25%;
+            width: 100%;
+        }
+
+        .colombia-red {
+            background-color: #CE1126;
+            height: 25%;
+            width: 100%;
+        }
+
+        /* Bandera de España - Diseño con colores reales */
+        .flag-spain {
+            width: 80px;
+            height: 50px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,215,0,0.5);
+            position: relative;
+        }
+
+        .spain-red-top {
+            background-color: #AA151B;
+            height: 25%;
+            width: 100%;
+        }
+
+        .spain-yellow {
+            background-color: #F1BF00;
+            height: 50%;
+            width: 100%;
+            position: relative;
+        }
+
+        .spain-red-bottom {
+            background-color: #AA151B;
+            height: 25%;
+            width: 100%;
+        }
+
+        /* Escudo de España simplificado (opcional) */
+        .spain-yellow::after {
+            content: "⚜️";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+            text-shadow: 0 0 2px rgba(0,0,0,0.5);
+            opacity: 0.7;
+        }
+
+        /* Versión más grande para escritorio */
+        @media (min-width: 651px) {
+            .flag-colombia, .flag-spain {
+                width: 100px;
+                height: 62px;
+            }
+            .flag-label {
+                font-size: 1rem;
+            }
+            .spain-yellow::after {
+                font-size: 26px;
+            }
+        }
+
         /* Estilo para el botón de premio */
         .prize-button-wrapper {
             position: fixed;
@@ -226,7 +335,6 @@
         }
 
         /* ========== ESTILOS MEJORADOS PARA MÓVIL ========== */
-        /* Tipografía más legible para móvil: Georgia, Times, serif */
         @media (max-width: 650px) {
             .credit-block {
                 width: 94%;
@@ -289,9 +397,22 @@
                 left: 12px;
                 padding: 5px 12px;
             }
+            .flags-container {
+                gap: 1rem;
+            }
+            .flag-colombia, .flag-spain {
+                width: 70px;
+                height: 44px;
+            }
+            .flag-label {
+                font-size: 0.75rem;
+            }
+            .spain-yellow::after {
+                font-size: 16px;
+            }
         }
 
-        /* Para móviles muy pequeños (menos de 480px) */
+        /* Para móviles muy pequeños */
         @media (max-width: 480px) {
             .credit-block {
                 width: 96%;
@@ -317,6 +438,16 @@
                 padding: 0.9rem 1.3rem;
                 font-size: 1.1rem;
                 letter-spacing: 1.5px;
+            }
+            .flag-colombia, .flag-spain {
+                width: 60px;
+                height: 38px;
+            }
+            .flag-label {
+                font-size: 0.7rem;
+            }
+            .spain-yellow::after {
+                font-size: 12px;
             }
         }
 
@@ -408,6 +539,25 @@
             <div class="credit-title">COLABORACION</div>
             <div class="divider"></div>
             <div class="credit-text">Hispano-Colombiana</div>
+            <!-- BANDERAS CON COLORES REALES - DISEÑO CSS -->
+            <div class="flags-container">
+                <div class="flag-item">
+                    <div class="flag-colombia">
+                        <div class="colombia-yellow"></div>
+                        <div class="colombia-blue"></div>
+                        <div class="colombia-red"></div>
+                    </div>
+                    <span class="flag-label">COLOMBIA</span>
+                </div>
+                <div class="flag-item">
+                    <div class="flag-spain">
+                        <div class="spain-red-top"></div>
+                        <div class="spain-yellow"></div>
+                        <div class="spain-red-bottom"></div>
+                    </div>
+                    <span class="flag-label">ESPAÑA</span>
+                </div>
+            </div>
             <div class="credit-sub">Uniendo tierras y magias</div>
         </div>
 
@@ -415,7 +565,7 @@
             <div class="credit-title">DERECHOS</div>
             <div class="divider"></div>
             <div class="credit-text">Reservados todos los derechos</div>
-            <div class="credit-sub">Protección bajo el sello del Criptex.</div>
+            <div class="credit-sub">Protección bajo el sello del Criptex</div>
         </div>
 
         <div class="credit-block">
@@ -428,7 +578,7 @@
             <div class="credit-text">Oscar y Yolanda Vera,</div>
             <div class="credit-text">los, ya legendarios y eternos,</div>
             <div class="credit-text">"Buscadores de Verdades",</div>
-            <div class="credit-text">por participar en el juego.</div>
+            <div class="credit-text">por participar en el juego</div>
         </div>
 
         <div class="credit-block">
@@ -436,8 +586,8 @@
             <div class="divider"></div>                    
             <div class="credit-text">Gracias a Yoly Vera</div>
             <div class="credit-text">por aguantar las horas de espera</div>
-            <div class="credit-text">durante la creación de este juego.</div>
-            <div class="credit-text">Paciencia infinita.</div>
+            <div class="credit-text">durante la creación de este juego</div>
+            <div class="credit-text">Paciencia infinita</div>
         </div>
 
         <div class="credit-block">
@@ -445,9 +595,9 @@
             <div class="divider"></div>
             <div class="credit-long">Todas las imágenes, voces y videos,</div>
             <div class="credit-long">se han creado con inteligencia artificial</div>
-            <div class="credit-long">Y NO SE HAN USADO FOTOGRAFIAS REALES PARA SU CREACION,</div>
+            <div class="credit-long">Y NO SE HAN USADO FOTOGRAFIAS REALES PARA SU CREACION,.</div>
             <div class="credit-long">Simplemente descripciones</div>
-            <div class="credit-sub">(A LA VISTA ESTÁ, QUE SALGO GUAPO Y CON PELO)</div>
+            <div class="credit-sub">(A LA VISTA ESTA QUE SALGO CON PELO Y GUAPO)</div>
         </div>
 
         <div class="credit-block">
@@ -458,16 +608,14 @@
             <div class="credit-long">y que la hayáis disfrutado durante el juego,</div>
             <div class="credit-long">por lo menos una decima parte</div>
             <div class="credit-long">de la que yo la disfruto.</div>
-            <div class="credit-sub">Gratitud eterna por elegir este punto de encuentro</div>
-            <div class="credit-sub">para Los Vera.</div>
+            <div class="credit-sub">Gratitud eterna a Los Vera,</div>
+            <div class="credit-sub">por elegir este punto de encuentro.</div>
         </div>
 
         <div class="credit-block">
             <div class="credit-title">F I N</div>
             <div class="credit-text">Que el Criptex guarde vuestra esencia para siempre</div>
-
-            <div class="credit-block">
-            <div class="credit-sub">HASTA EL PROXIMO JUEGO</div>
+            <div class="credit-sub">¡¡Hasta el próximo juego!!.</div>
         </div>
 
     </div>
@@ -493,48 +641,41 @@
         let prizeShown = false;
         let animationTimeout = null;
         
-        // 🐢 VELOCIDAD MÁS LENTA: 55 píxeles por segundo (antes 90px/s)
-        // Esto hace que los créditos duren el doble de tiempo, creando una experiencia más pausada y épica
         const SPEED = 55;
         
-        // Calcular la duración exacta de la animación
         function calculateDuration() {
             if (!creditsContainer) return 20;
             
             const creditsHeight = creditsContainer.scrollHeight;
             const windowHeight = window.innerHeight;
             
-            // Posición inicial: el primer bloque comienza en el borde inferior
             const startTopPx = windowHeight;
-            // Posición final: el último bloque sale completamente por arriba
             const endTopPx = -creditsHeight;
             
             const distance = startTopPx - endTopPx;
             const duration = distance / SPEED;
             
-            console.log(`=== DATOS ANIMACIÓN (MODO LENTO) ===`);
+            console.log(`=== DATOS ANIMACIÓN ===`);
             console.log(`Altura créditos: ${creditsHeight}px`);
             console.log(`Altura ventana: ${windowHeight}px`);
             console.log(`Distancia a recorrer: ${distance}px`);
-            console.log(`Velocidad: ${SPEED}px/s (estilo cinematográfico)`);
-            console.log(`Duración: ${duration.toFixed(2)} segundos (${(duration / 60).toFixed(1)} minutos)`);
+            console.log(`Velocidad: ${SPEED}px/s`);
+            console.log(`Duración: ${duration.toFixed(2)} segundos`);
             
             return { duration, startTopPx, endTopPx, distance };
         }
         
-        // Mostrar el botón de premio
         function showPrizeButton() {
             if (!prizeShown) {
                 prizeShown = true;
                 prizeWrapper.classList.add('show');
-                console.log("🏆 BOTÓN DE PREMIO VISIBLE - Créditos finalizados");
+                console.log("🏆 BOTÓN DE PREMIO VISIBLE");
             }
         }
         
-        // Abrir la imagen de premio
         function openPrizeImage() {
             window.open('premio.jpeg', '_blank');
-            console.log("📷 Abriendo imagen de premio: premio.jpeg");
+            console.log("📷 Abriendo imagen de premio");
             
             const originalText = prizeBtn.textContent;
             prizeBtn.textContent = '✨ ¡PREMIOS ABRIENDO! ✨';
@@ -543,7 +684,6 @@
             }, 2000);
         }
         
-        // Iniciar animación con requestAnimationFrame
         function startAnimation() {
             if (!creditsContainer) return;
             
@@ -568,7 +708,7 @@
                     cancelAnimationFrame(animationFrameId);
                     animationFrameId = null;
                 }
-                console.log("✅ Animación completada por temporizador");
+                console.log("✅ Animación completada");
             }, animationMs);
             
             function animate(currentTime) {
@@ -597,10 +737,9 @@
             }
             animationFrameId = requestAnimationFrame(animate);
             
-            console.log(`🎬 Animación iniciada - Duración: ${(animationMs / 1000).toFixed(1)} segundos (${SPEED}px/s)`);
+            console.log(`🎬 Animación iniciada - Duración: ${(animationMs / 1000).toFixed(1)} segundos`);
         }
         
-        // Reiniciar animación
         function restartCredits() {
             if (animationTimeout) {
                 clearTimeout(animationTimeout);
@@ -625,7 +764,6 @@
             console.log("🔄 Créditos reiniciados");
         }
         
-        // Configurar el botón de premio
         function setupPrizeButton() {
             if (prizeBtn) {
                 prizeBtn.addEventListener('click', function() {
@@ -634,19 +772,15 @@
             }
         }
         
-        // Inicializar
         function init() {
             startAnimation();
             setupPrizeButton();
             console.log("=== INICIALIZADO ===");
-            console.log("🐢 Velocidad: 45px/s (modo lento y cinematográfico)");
-            console.log("Móvil: tipografía Georgia/Times (más legible)");
-            console.log("Escritorio: tipografía medieval");
+            console.log("🇨🇴🇪🇸 Banderas con colores reales de Colombia y España");
         }
         
         init();
         
-        // Eventos para reiniciar
         window.addEventListener('keydown', function(e) {
             if (e.key === 'r' || e.key === 'R') {
                 e.preventDefault();
@@ -668,7 +802,6 @@
             lastTouch = now;
         });
         
-        // Verificar imagen de fondo
         const bgDiv = document.getElementById('cinemaBg');
         const imgTest = new Image();
         imgTest.onerror = function() {
@@ -678,7 +811,6 @@
         imgTest.src = 'criptex.jpg';
         bgDiv.style.backgroundColor = '#c4b28a';
         
-        // Recalcular si la ventana cambia de tamaño
         let resizeTimeout;
         window.addEventListener('resize', function() {
             clearTimeout(resizeTimeout);
