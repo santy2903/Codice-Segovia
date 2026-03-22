@@ -6,10 +6,10 @@
     <title>El código secreto de Segovia</title>
     <link rel="stylesheet" href="styles.css">
     
-    <!-- NUEVO: Enlace al manifiesto PWA -->
-    <link rel="manifest" href="manifest.json">
+    <!-- Enlace al manifiesto PWA -->
+    <link rel="manifest" href="/Codice-Segovia/manifest.json">
     
-    <!-- NUEVO: Metaetiquetas para iOS (opcional, mejora compatibilidad) -->
+    <!-- Metaetiquetas para iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Códice Segovia">
@@ -20,11 +20,11 @@
         <button id="start-button" onclick="location.href='instrucciones.html'">Comienza la aventura</button>
     </div>
     
-    <!-- NUEVO: Registro del Service Worker -->
+    <!-- Registro del Service Worker -->
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/codice-segovia/sw.js')
-                .then(reg => console.log('Service Worker registrado', reg))
+            navigator.serviceWorker.register('/Codice-Segovia/sw.js')
+                .then(reg => console.log('Service Worker registrado correctamente', reg))
                 .catch(err => console.error('Error al registrar el Service Worker:', err));
         }
     </script>
