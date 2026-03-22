@@ -1,19 +1,20 @@
 {
     "name": "El Códice Secreto de Segovia",
-    "short_name": "Códice",
+    "short_name": "Códice Segovia",
     "description": "Aventura interactiva para descubrir el código secreto de Segovia",
-    "start_url": "/codice-segovia/",
+    "start_url": "/Codice-Segovia/",
+    "scope": "/Codice-Segovia/",
     "display": "standalone",
     "theme_color": "#2c3e50",
     "background_color": "#ffffff",
     "icons": [
         {
-            "src": "icon-192.png",
+            "src": "/Codice-Segovia/icon-192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "icon-512.png",
+            "src": "/Codice-Segovia/icon-512.png",
             "sizes": "512x512",
             "type": "image/png"
         }
