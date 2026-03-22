@@ -2,7 +2,7 @@
     "name": "El Códice Secreto de Segovia",
     "short_name": "Códice",
     "description": "Aventura interactiva para descubrir el código secreto de Segovia",
-    "start_url": "/",
+    "start_url": "/codice-segovia/",
     "display": "standalone",
     "theme_color": "#2c3e50",
     "background_color": "#ffffff",
