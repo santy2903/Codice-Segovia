@@ -18,52 +18,94 @@
         }
       }
 
-      // Función para iniciar video en pantalla completa
+      // Función para entrar a pantalla completa
+      function enterFullscreen(element) {
+        if (element.requestFullscreen) {
+          return element.requestFullscreen();
+        } else if (element.webkitRequestFullscreen) {
+          return element.webkitRequestFullscreen();
+        } else if (element.webkitEnterFullscreen) {
+          return element.webkitEnterFullscreen();
+        } else if (element.mozRequestFullScreen) {
+          return element.mozRequestFullScreen();
+        } else if (element.msRequestFullscreen) {
+          return element.msRequestFullscreen();
+        }
+        return Promise.reject(new Error('Fullscreen not supported'));
+      }
+
+      // Función para salir de pantalla completa
+      function exitFullscreen() {
+        if (document.exitFullscreen) {
+          return document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+          return document.webkitExitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+          return document.mozCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+          return document.msExitFullscreen();
+        }
+        return Promise.reject(new Error('Fullscreen exit not supported'));
+      }
+
+      // Variable para controlar si ya se intentó la reproducción automática
+      let autoPlayAttempted = false;
+
+      // Función principal para iniciar video en pantalla completa
       async function startVideoInFullscreen() {
+        if (autoPlayAttempted) return;
+        autoPlayAttempted = true;
+        
         try {
-          // Intentar reproducir el video sin mute
-          await video.play();
+          // Primero entrar a pantalla completa con el wrapper del video
+          await enterFullscreen(wrapper);
           
-          // Solicitar pantalla completa
-          if (video.requestFullscreen) {
-            await video.requestFullscreen();
-          } else if (video.webkitEnterFullscreen) {
-            video.webkitEnterFullscreen();
-          } else if (video.webkitRequestFullscreen) {
-            await video.webkitRequestFullscreen();
-          } else if (video.mozRequestFullScreen) {
-            await video.mozRequestFullScreen();
-          } else if (video.msRequestFullscreen) {
-            await video.msRequestFullscreen();
+          // Pequeña pausa para asegurar que la pantalla completa se activó
+          setTimeout(async () => {
+            try {
+              // Reproducir el video
+              await video.play();
+              updatePlayButtonVisibility();
+            } catch (playErr) {
+              console.warn('Error al reproducir:', playErr);
+              // Si falla la reproducción, mostrar botón de play
+              updatePlayButtonVisibility();
+            }
+          }, 100);
+          
+        } catch (fsErr) {
+          console.warn('Error al entrar a pantalla completa:', fsErr);
+          // Si falla pantalla completa, al menos intentar reproducir
+          try {
+            await video.play();
+            updatePlayButtonVisibility();
+          } catch (playErr) {
+            console.warn('Error al reproducir:', playErr);
+            updatePlayButtonVisibility();
           }
-          
-          updatePlayButtonVisibility();
-        } catch (err) {
-          console.warn('Error al iniciar reproducción automática:', err);
-          // Si el autoplay está bloqueado por el navegador, mostrar el botón manual
-          updatePlayButtonVisibility();
         }
       }
 
-      // Evento para el botón de play personalizado (en caso de que autoplay falle)
+      // Evento para el botón de play personalizado
       customPlayBtn.addEventListener('click', async function (e) {
         e.stopPropagation();
         await startVideoInFullscreen();
       });
 
-      // Detectar cambios en pantalla completa
+      // Detectar cuando se sale de pantalla completa manualmente
       function handleFullscreenChange() {
         const isFullscreen = !!(document.fullscreenElement || 
                                  document.webkitFullscreenElement || 
                                  document.mozFullScreenElement);
         
-        if (!isFullscreen && !video.paused && !video.ended) {
-          // Si salimos de pantalla completa y el video sigue reproduciéndose,
-          // no hacemos nada para mantener la reproducción
-          updatePlayButtonVisibility();
-        } else if (!isFullscreen && video.paused) {
+        // Si no estamos en pantalla completa y el video no ha terminado
+        if (!isFullscreen && !video.ended && !video.paused) {
+          // Si el usuario salió manualmente de pantalla completa pero el video sigue,
+          // no hacemos nada, pero actualizamos la visibilidad del botón
           updatePlayButtonVisibility();
         }
+        
+        updatePlayButtonVisibility();
       }
 
       document.addEventListener('fullscreenchange', handleFullscreenChange);
@@ -80,27 +122,25 @@
         wrapper.classList.remove('playing');
       });
 
-      video.addEventListener('ended', function () {
-        // Salir de pantalla completa cuando termina el video
-        if (document.exitFullscreen) {
-          document.exitFullscreen().catch(err => console.warn(err));
-        } else if (document.webkitExitFullscreen) {
-          document.webkitExitFullscreen();
-        } else if (document.mozCancelFullScreen) {
-          document.mozCancelFullScreen();
-        } else if (document.msExitFullscreen) {
-          document.msExitFullscreen();
-        }
+      // Cuando el video termina, salir de pantalla completa
+      video.addEventListener('ended', async function () {
         wrapper.classList.remove('playing');
+        
+        // Salir de pantalla completa cuando termina el video
+        try {
+          await exitFullscreen();
+        } catch (err) {
+          console.warn('Error al salir de pantalla completa:', err);
+        }
       });
 
       updatePlayButtonVisibility();
       
-      // INICIAR VIDEO AUTOMÁTICAMENTE AL CARGAR LA PÁGINA
-      // Pequeño retraso para asegurar que el DOM está listo
+      // INICIAR VIDEO AUTOMÁTICAMENTE EN PANTALLA COMPLETA AL CARGAR LA PÁGINA
+      // Esperar a que el DOM esté completamente cargado y luego iniciar
       setTimeout(() => {
         startVideoInFullscreen();
-      }, 100);
+      }, 200);
     }
 
     // --- LÓGICA DE CONTRASEÑA Y BOTÓN CONTINUAR ---
