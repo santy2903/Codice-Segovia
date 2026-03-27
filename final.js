@@ -7,8 +7,9 @@
     const mapaButton = document.getElementById('mapaButton');
     const passwordInput = document.getElementById('passwordInput');
 
-    // --- LÓGICA DE VIDEO: PLAY FULLSCREEN Y OCULTAR BOTÓN ---
+    // --- LÓGICA DE VIDEO: REPRODUCCIÓN AUTOMÁTICA EN PANTALLA COMPLETA ---
     if (video && wrapper && customPlayBtn) {
+      
       function updatePlayButtonVisibility() {
         if (video.paused) {
           wrapper.classList.remove('playing');
@@ -17,44 +18,60 @@
         }
       }
 
-      customPlayBtn.addEventListener('click', async function (e) {
-        e.stopPropagation();
-
+      // Función para iniciar video en pantalla completa
+      async function startVideoInFullscreen() {
         try {
+          // Intentar reproducir el video sin mute
           await video.play();
-
+          
+          // Solicitar pantalla completa
           if (video.requestFullscreen) {
-            video.requestFullscreen();
+            await video.requestFullscreen();
           } else if (video.webkitEnterFullscreen) {
             video.webkitEnterFullscreen();
           } else if (video.webkitRequestFullscreen) {
-            video.webkitRequestFullscreen();
+            await video.webkitRequestFullscreen();
           } else if (video.mozRequestFullScreen) {
-            video.mozRequestFullScreen();
+            await video.mozRequestFullScreen();
           } else if (video.msRequestFullscreen) {
-            video.msRequestFullscreen();
+            await video.msRequestFullscreen();
           }
-
+          
           updatePlayButtonVisibility();
         } catch (err) {
-          console.warn('Error al reproducir en fullscreen:', err);
-          try {
-            await video.play();
-          } catch (e) {}
+          console.warn('Error al iniciar reproducción automática:', err);
+          // Si el autoplay está bloqueado por el navegador, mostrar el botón manual
           updatePlayButtonVisibility();
         }
+      }
+
+      // Evento para el botón de play personalizado (en caso de que autoplay falle)
+      customPlayBtn.addEventListener('click', async function (e) {
+        e.stopPropagation();
+        await startVideoInFullscreen();
       });
 
-      document.addEventListener('fullscreenchange', function () {
-        if (
-          !document.fullscreenElement &&
-          !document.webkitFullscreenElement &&
-          !document.mozFullScreenElement
-        ) {
+      // Detectar cambios en pantalla completa
+      function handleFullscreenChange() {
+        const isFullscreen = !!(document.fullscreenElement || 
+                                 document.webkitFullscreenElement || 
+                                 document.mozFullScreenElement);
+        
+        if (!isFullscreen && !video.paused && !video.ended) {
+          // Si salimos de pantalla completa y el video sigue reproduciéndose,
+          // no hacemos nada para mantener la reproducción
+          updatePlayButtonVisibility();
+        } else if (!isFullscreen && video.paused) {
           updatePlayButtonVisibility();
         }
-      });
+      }
 
+      document.addEventListener('fullscreenchange', handleFullscreenChange);
+      document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+      document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+      document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
+      // Eventos del video
       video.addEventListener('play', function () {
         wrapper.classList.add('playing');
       });
@@ -64,6 +81,7 @@
       });
 
       video.addEventListener('ended', function () {
+        // Salir de pantalla completa cuando termina el video
         if (document.exitFullscreen) {
           document.exitFullscreen().catch(err => console.warn(err));
         } else if (document.webkitExitFullscreen) {
@@ -73,12 +91,16 @@
         } else if (document.msExitFullscreen) {
           document.msExitFullscreen();
         }
-
         wrapper.classList.remove('playing');
       });
 
       updatePlayButtonVisibility();
-      video.addEventListener('pause', updatePlayButtonVisibility);
+      
+      // INICIAR VIDEO AUTOMÁTICAMENTE AL CARGAR LA PÁGINA
+      // Pequeño retraso para asegurar que el DOM está listo
+      setTimeout(() => {
+        startVideoInFullscreen();
+      }, 100);
     }
 
     // --- LÓGICA DE CONTRASEÑA Y BOTÓN CONTINUAR ---
@@ -87,11 +109,9 @@
     function checkPasswordAndEnableButton() {
       const entered = passwordInput.value.trim();
 
-      if (
-        entered.localeCompare(CORRECT_PASSWORD, undefined, {
-          sensitivity: 'base'
-        }) === 0
-      ) {
+      if (entered.localeCompare(CORRECT_PASSWORD, undefined, {
+        sensitivity: 'base'
+      }) === 0) {
         mapaButton.classList.add('enabled');
       } else {
         mapaButton.classList.remove('enabled');
@@ -136,7 +156,6 @@
     }
 
     // --- FUNCIONALIDAD SIMPLE EXTRA DE REDIRECCIÓN ---
-    // Esto solo actúa si existe el botón y no hay input de contraseña
     if (mapaButton && !passwordInput) {
       mapaButton.addEventListener('click', function () {
         window.location.href = 'criptex.html';
