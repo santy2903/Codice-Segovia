@@ -2,18 +2,18 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="final.css">
-    <title>Códice - El Guardián</title>
+
 </head>
 <body>
-    <!-- Contenedor principal -->
-    <div class="container" id="mainContainer">
-        <h2>Habeis resuelto la primera parte del Códice. Reproducir el video.</h2>
+    <div class="container">
+        <h2> Habeis resuelto la primera parte  del Códice.  Reproducir el video.</h2>
+
 
         <!-- Wrapper de video con botón de play personalizado -->
         <div class="video-wrapper" id="videoWrapper">
-            <video id="video" class="video" playsinline preload="auto" muted>
+            <video id="video" class="video" playsinline preload="metadata" controls playsinline >
                 <source src="despues11.mp4" type="video/mp4">
                 Tu navegador no soporta la etiqueta de video.
             </video>
@@ -23,7 +23,7 @@
             </button>
         </div>
 
-        <!-- Mensaje del guardian -->
+        <!-- Mensaje del guardian con la nueva frase (sin pista) -->
         <div class="guardian-message">
             ⚡ Antes de continuar, hablad con el Guardián ⚡<br>
             <span style="font-size: 0.95em; opacity: 0.9;">La contraseña para seguir, os la dará él</span>
@@ -34,12 +34,6 @@
             <input type="text" class="password-input" id="passwordInput" placeholder="🔒 Introducir contraseña" autocomplete="off">
             <button id="mapaButton">Continuar</button>
         </div>
-    </div>
-
-    <!-- Video en pantalla completa (overlay) -->
-    <div id="fullscreenVideoOverlay" class="fullscreen-overlay" style="display: none;">
-        <video id="fullscreenVideo" class="fullscreen-video" playsinline preload="auto"></video>
-        <button id="closeFullscreenBtn" class="close-fullscreen-btn" style="display: none;">✕</button>
     </div>
 
     <script src="final.js"></script>
