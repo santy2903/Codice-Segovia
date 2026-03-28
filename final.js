@@ -6,8 +6,9 @@
     const customPlayBtn = document.getElementById('customPlayBtn');
     const mapaButton = document.getElementById('mapaButton');
     const passwordInput = document.getElementById('passwordInput');
+    const body = document.body;
 
-    // --- LÓGICA DE VIDEO: PANTALLA COMPLETA CON CSS Y AUTOPLAY ---
+    // --- LÓGICA DE VIDEO: PANTALLA COMPLETA TOTAL ---
     if (video && wrapper && customPlayBtn) {
       
       function updatePlayButtonVisibility() {
@@ -18,26 +19,28 @@
         }
       }
 
-      // Entrar en modo pantalla completa (CSS, no API)
-      function enterFullscreenCSS() {
-        wrapper.classList.add('fullscreen-mode');
+      // Entrar en modo pantalla completa (cubre toda la pantalla)
+      function enterFullscreen() {
+        body.classList.add('video-fullscreen');
       }
 
       // Salir del modo pantalla completa
-      function exitFullscreenCSS() {
-        wrapper.classList.remove('fullscreen-mode');
+      function exitFullscreen() {
+        body.classList.remove('video-fullscreen');
       }
 
       // Variable para controlar si ya se intentó el autoplay
       let autoPlayAttempted = false;
+      let isFullscreen = false;
 
-      // Función principal: expandir y reproducir
+      // Función principal: expandir a pantalla completa y reproducir
       async function startVideoFullscreen() {
         if (autoPlayAttempted) return;
         autoPlayAttempted = true;
 
-        // Primero expandir a pantalla completa (CSS)
-        enterFullscreenCSS();
+        // Expandir a pantalla completa
+        enterFullscreen();
+        isFullscreen = true;
 
         // Pequeño retraso para que el navegador aplique los estilos
         setTimeout(async () => {
@@ -49,7 +52,6 @@
             console.warn('Autoplay bloqueado por el navegador:', err);
             // Si no se pudo reproducir automáticamente, mostramos el botón de play
             updatePlayButtonVisibility();
-            // El botón de play está visible, al hacer clic se intentará de nuevo
           }
         }, 100);
       }
@@ -57,7 +59,7 @@
       // Función para cuando el usuario hace clic en el botón de play
       async function manualPlay() {
         // Si ya está en modo fullscreen pero pausado, solo reproducir
-        if (wrapper.classList.contains('fullscreen-mode')) {
+        if (body.classList.contains('video-fullscreen')) {
           try {
             await video.play();
             updatePlayButtonVisibility();
@@ -66,7 +68,8 @@
           }
         } else {
           // Si no está en modo fullscreen, expandir y reproducir
-          enterFullscreenCSS();
+          enterFullscreen();
+          isFullscreen = true;
           setTimeout(async () => {
             try {
               await video.play();
@@ -79,10 +82,12 @@
       }
 
       // Evento del botón de play
-      customPlayBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        manualPlay();
-      });
+      if (customPlayBtn) {
+        customPlayBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          manualPlay();
+        });
+      }
 
       // Eventos del video
       video.addEventListener('play', () => {
@@ -93,22 +98,35 @@
         wrapper.classList.remove('playing');
       });
 
-      // Cuando el video termina, salir del modo fullscreen y volver al tamaño original
+      // Cuando el video termina, salir del modo fullscreen
       video.addEventListener('ended', () => {
-        exitFullscreenCSS();
+        exitFullscreen();
         wrapper.classList.remove('playing');
-        // Opcional: también podríamos reiniciar el video para futuras reproducciones
-        // pero no es necesario
+        isFullscreen = false;
       });
 
-      // Si el usuario sale del modo fullscreen manualmente (por ejemplo, haciendo scroll o tocando),
-      // también detenemos el video? No, mejor lo dejamos seguir, pero actualizamos la interfaz.
-      // Podríamos agregar un observador de cambios en la clase, pero no es crítico.
+      // Si el usuario presiona el botón de "Esc" o sale del modo fullscreen manualmente
+      // detectamos cambios en la clase del body
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.attributeName === 'class') {
+            if (!body.classList.contains('video-fullscreen') && isFullscreen && !video.ended) {
+              // Si salieron manualmente del fullscreen y el video no terminó, lo pausamos? 
+              // Mejor lo dejamos seguir, pero actualizamos la variable
+              isFullscreen = false;
+            }
+          }
+        });
+      });
+      
+      observer.observe(body, { attributes: true });
 
       updatePlayButtonVisibility();
 
       // Iniciar automáticamente al cargar la página
-      startVideoFullscreen();
+      setTimeout(() => {
+        startVideoFullscreen();
+      }, 200);
     }
 
     // --- LÓGICA DE CONTRASEÑA Y BOTÓN CONTINUAR ---
