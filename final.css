@@ -23,6 +23,7 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  overflow-x: hidden;
 }
 
 /* ========== TÍTULOS ========== */
@@ -55,25 +56,27 @@ h2 {
   flex-direction: column;
   align-items: center;
   gap: 18px;
+  transition: opacity 0.3s;
 }
 
-/* ========== VIDEO ========== */
+/* ========== VIDEO WRAPPER (normal) ========== */
 .video-wrapper {
   position: relative;
   width: 100%;
   max-width: 640px;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16 / 9; /* por defecto, pero se ajustará si es necesario */
   margin-bottom: 20px;
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
   background-color: #111;
+  transition: all 0.3s ease;
 }
 
+/* ========== VIDEO ========== */
 .video {
   width: 100%;
   height: 100%;
-  height: auto;
   display: block;
   object-fit: cover;
   background: #000;
@@ -81,15 +84,42 @@ h2 {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-/* ========== BOTÓN PAUSA ========== */
-.pause-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: transparent;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
+/* ========== ESTILO DE PANTALLA COMPLETA (9:16 vertical) ========== */
+.video-wrapper.fullscreen-mode {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  border-radius: 0;
+  z-index: 9999;
+  background: black;
+  aspect-ratio: auto; /* anula la relación original */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+}
+
+.video-wrapper.fullscreen-mode .video {
+  width: auto;
+  height: 100%;
+  max-width: 100%;
+  object-fit: contain; /* para mantener la relación 9:16 sin recortes */
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Para que en móviles con pantalla ancha se vea bien */
+@media (orientation: landscape) {
+  .video-wrapper.fullscreen-mode .video {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+  }
 }
 
 /* ========== BOTÓN PLAY PERSONALIZADO ========== */
@@ -225,16 +255,6 @@ h2 {
 #mapaButton.enabled:active {
   transform: translateY(3px);
   box-shadow: 0 3px 0 #a13e1f;
-}
-
-.mapaButton:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-/* ========== ÍCONO ========== */
-.icon {
-  width: 50px;
-  height: 50px;
 }
 
 /* ========== RESPONSIVE ========== */
