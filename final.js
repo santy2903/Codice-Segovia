@@ -7,8 +7,9 @@
     const mapaButton = document.getElementById('mapaButton');
     const passwordInput = document.getElementById('passwordInput');
 
-    // --- LÓGICA DE VIDEO: PLAY FULLSCREEN Y OCULTAR BOTÓN ---
+    // --- LÓGICA DE VIDEO: PANTALLA COMPLETA CON CSS Y AUTOPLAY ---
     if (video && wrapper && customPlayBtn) {
+      
       function updatePlayButtonVisibility() {
         if (video.paused) {
           wrapper.classList.remove('playing');
@@ -17,68 +18,97 @@
         }
       }
 
-      customPlayBtn.addEventListener('click', async function (e) {
-        e.stopPropagation();
+      // Entrar en modo pantalla completa (CSS, no API)
+      function enterFullscreenCSS() {
+        wrapper.classList.add('fullscreen-mode');
+      }
 
-        try {
-          await video.play();
+      // Salir del modo pantalla completa
+      function exitFullscreenCSS() {
+        wrapper.classList.remove('fullscreen-mode');
+      }
 
-          if (video.requestFullscreen) {
-            video.requestFullscreen();
-          } else if (video.webkitEnterFullscreen) {
-            video.webkitEnterFullscreen();
-          } else if (video.webkitRequestFullscreen) {
-            video.webkitRequestFullscreen();
-          } else if (video.mozRequestFullScreen) {
-            video.mozRequestFullScreen();
-          } else if (video.msRequestFullscreen) {
-            video.msRequestFullscreen();
+      // Variable para controlar si ya se intentó el autoplay
+      let autoPlayAttempted = false;
+
+      // Función principal: expandir y reproducir
+      async function startVideoFullscreen() {
+        if (autoPlayAttempted) return;
+        autoPlayAttempted = true;
+
+        // Primero expandir a pantalla completa (CSS)
+        enterFullscreenCSS();
+
+        // Pequeño retraso para que el navegador aplique los estilos
+        setTimeout(async () => {
+          try {
+            // Intentar reproducir con sonido
+            await video.play();
+            updatePlayButtonVisibility();
+          } catch (err) {
+            console.warn('Autoplay bloqueado por el navegador:', err);
+            // Si no se pudo reproducir automáticamente, mostramos el botón de play
+            updatePlayButtonVisibility();
+            // El botón de play está visible, al hacer clic se intentará de nuevo
           }
+        }, 100);
+      }
 
-          updatePlayButtonVisibility();
-        } catch (err) {
-          console.warn('Error al reproducir en fullscreen:', err);
+      // Función para cuando el usuario hace clic en el botón de play
+      async function manualPlay() {
+        // Si ya está en modo fullscreen pero pausado, solo reproducir
+        if (wrapper.classList.contains('fullscreen-mode')) {
           try {
             await video.play();
-          } catch (e) {}
-          updatePlayButtonVisibility();
+            updatePlayButtonVisibility();
+          } catch (err) {
+            console.warn('Error al reproducir manualmente:', err);
+          }
+        } else {
+          // Si no está en modo fullscreen, expandir y reproducir
+          enterFullscreenCSS();
+          setTimeout(async () => {
+            try {
+              await video.play();
+              updatePlayButtonVisibility();
+            } catch (err) {
+              console.warn('Error al reproducir manualmente:', err);
+            }
+          }, 100);
         }
+      }
+
+      // Evento del botón de play
+      customPlayBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        manualPlay();
       });
 
-      document.addEventListener('fullscreenchange', function () {
-        if (
-          !document.fullscreenElement &&
-          !document.webkitFullscreenElement &&
-          !document.mozFullScreenElement
-        ) {
-          updatePlayButtonVisibility();
-        }
-      });
-
-      video.addEventListener('play', function () {
+      // Eventos del video
+      video.addEventListener('play', () => {
         wrapper.classList.add('playing');
       });
 
-      video.addEventListener('pause', function () {
+      video.addEventListener('pause', () => {
         wrapper.classList.remove('playing');
       });
 
-      video.addEventListener('ended', function () {
-        if (document.exitFullscreen) {
-          document.exitFullscreen().catch(err => console.warn(err));
-        } else if (document.webkitExitFullscreen) {
-          document.webkitExitFullscreen();
-        } else if (document.mozCancelFullScreen) {
-          document.mozCancelFullScreen();
-        } else if (document.msExitFullscreen) {
-          document.msExitFullscreen();
-        }
-
+      // Cuando el video termina, salir del modo fullscreen y volver al tamaño original
+      video.addEventListener('ended', () => {
+        exitFullscreenCSS();
         wrapper.classList.remove('playing');
+        // Opcional: también podríamos reiniciar el video para futuras reproducciones
+        // pero no es necesario
       });
+
+      // Si el usuario sale del modo fullscreen manualmente (por ejemplo, haciendo scroll o tocando),
+      // también detenemos el video? No, mejor lo dejamos seguir, pero actualizamos la interfaz.
+      // Podríamos agregar un observador de cambios en la clase, pero no es crítico.
 
       updatePlayButtonVisibility();
-      video.addEventListener('pause', updatePlayButtonVisibility);
+
+      // Iniciar automáticamente al cargar la página
+      startVideoFullscreen();
     }
 
     // --- LÓGICA DE CONTRASEÑA Y BOTÓN CONTINUAR ---
@@ -87,11 +117,9 @@
     function checkPasswordAndEnableButton() {
       const entered = passwordInput.value.trim();
 
-      if (
-        entered.localeCompare(CORRECT_PASSWORD, undefined, {
-          sensitivity: 'base'
-        }) === 0
-      ) {
+      if (entered.localeCompare(CORRECT_PASSWORD, undefined, {
+        sensitivity: 'base'
+      }) === 0) {
         mapaButton.classList.add('enabled');
       } else {
         mapaButton.classList.remove('enabled');
@@ -105,19 +133,15 @@
       mapaButton.classList.remove('enabled');
 
       mapaButton.addEventListener('click', function (e) {
-        // Si no está habilitado, no deja continuar
         if (!mapaButton.classList.contains('enabled')) {
           e.preventDefault();
           e.stopPropagation();
-
           passwordInput.style.borderColor = '#ff3333';
           setTimeout(() => {
             passwordInput.style.borderColor = 'rgba(255,87,51,0.6)';
           }, 300);
           return;
         }
-
-        // Redirigir a la página criptex.html
         window.location.href = 'criptex.html';
       });
 
@@ -125,7 +149,6 @@
         if (e.key === 'Enter') {
           e.preventDefault();
           checkPasswordAndEnableButton();
-
           if (mapaButton.classList.contains('enabled')) {
             mapaButton.click();
           }
@@ -135,8 +158,6 @@
       passwordInput.setAttribute('autocomplete', 'off');
     }
 
-    // --- FUNCIONALIDAD SIMPLE EXTRA DE REDIRECCIÓN ---
-    // Esto solo actúa si existe el botón y no hay input de contraseña
     if (mapaButton && !passwordInput) {
       mapaButton.addEventListener('click', function () {
         window.location.href = 'criptex.html';
