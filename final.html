@@ -4,20 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="final.css">
-
+    <title>Códice - El Guardián</title>
 </head>
 <body>
     <div class="container">
-        <h2> Habeis resuelto la primera parte  del Códice.  Reproducir el video.</h2>
-
+        <h2>Habeis resuelto la primera parte del Códice. Reproducir el video.</h2>
 
         <!-- Wrapper de video con botón de play personalizado -->
         <div class="video-wrapper" id="videoWrapper">
-            <video id="video" class="video" playsinline preload="metadata" controls playsinline >
+            <video id="video" class="video" playsinline preload="auto">
                 <source src="despues11.mp4" type="video/mp4">
                 Tu navegador no soporta la etiqueta de video.
             </video>
-            <!-- Botón de play redondo -->
+            <!-- Botón de play redondo (se mostrará si falla autoplay) -->
             <button class="custom-play-button" id="customPlayBtn" aria-label="Reproducir video">
                 <div class="play-icon"></div>
             </button>
