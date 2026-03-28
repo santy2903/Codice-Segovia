@@ -17,6 +17,7 @@
     let isFullscreen = false;
     let autoPlayAttempted = false;
     let videoSource = '';
+    let wasPlayingBeforeFullscreen = false;
     
     // Guardar la fuente del video original
     if (video) {
@@ -32,9 +33,12 @@
     
     // Entrar en modo pantalla completa
     function enterFullscreen() {
-      if (!fullscreenOverlay || !fullscreenVideo) return;
+      if (!fullscreenOverlay || !fullscreenVideo || !video) return;
       
-      // Copiar la fuente del video
+      // Guardar el estado de reproducción del video original
+      wasPlayingBeforeFullscreen = !video.paused;
+      
+      // Copiar la fuente del video al overlay
       fullscreenVideo.src = videoSource;
       fullscreenVideo.load();
       
@@ -43,11 +47,11 @@
       body.classList.add('video-fullscreen');
       isFullscreen = true;
       
-      // Intentar reproducir el video en pantalla completa
+      // Sincronizar el tiempo y reproducir
       setTimeout(async () => {
         try {
-          // Obtener el tiempo actual del video original si estaba reproduciéndose
-          if (video && !video.paused && video.currentTime > 0) {
+          // Sincronizar el tiempo actual
+          if (video.currentTime > 0 && !video.ended) {
             fullscreenVideo.currentTime = video.currentTime;
           }
           await fullscreenVideo.play();
@@ -57,35 +61,69 @@
       }, 100);
     }
     
-    // Salir del modo pantalla completa
+    // Salir del modo pantalla completa y restaurar el video original
     function exitFullscreen() {
-      if (!fullscreenOverlay || !fullscreenVideo) return;
+      if (!fullscreenOverlay || !fullscreenVideo || !video) return;
       
-      // Guardar el tiempo actual antes de salir
+      // Guardar el tiempo actual del video en fullscreen
       const currentTime = fullscreenVideo.currentTime;
+      const wasEnded = fullscreenVideo.ended;
       
       // Detener el video del overlay
       fullscreenVideo.pause();
+      
+      // Limpiar la fuente del overlay para liberar memoria
+      fullscreenVideo.src = '';
       
       // Ocultar el overlay
       fullscreenOverlay.style.display = 'none';
       body.classList.remove('video-fullscreen');
       isFullscreen = false;
       
-      // Sincronizar el video original
-      if (video && currentTime > 0 && !video.ended) {
-        video.currentTime = currentTime;
-        // Si el video original estaba en reproducción antes de entrar en fullscreen,
-        // continuar reproduciéndolo
-        if (!video.paused) {
-          video.play().catch(err => console.warn('Error al reanudar:', err));
-        }
+      // RESTAURAR EL VIDEO ORIGINAL A SU ESTADO NORMAL
+      // Asegurarse de que el wrapper tenga sus dimensiones originales
+      if (wrapper) {
+        // Forzar un reflow para asegurar que las dimensiones se restablezcan
+        wrapper.style.transform = 'scale(1)';
+        wrapper.style.opacity = '1';
       }
       
-      // Limpiar la fuente del overlay
-      setTimeout(() => {
-        fullscreenVideo.src = '';
-      }, 100);
+      // Restaurar el video original
+      if (!wasEnded) {
+        video.currentTime = currentTime;
+        
+        // Si el video original estaba reproduciéndose antes de entrar en fullscreen,
+        // o si no había terminado, lo dejamos pausado en la posición donde terminó el fullscreen
+        if (wasPlayingBeforeFullscreen && !video.ended) {
+          video.play().catch(err => console.warn('Error al reanudar:', err));
+        }
+      } else {
+        // Si el video terminó, reseteamos el video original al inicio
+        video.currentTime = 0;
+        video.pause();
+      }
+      
+      // Restaurar la visibilidad del botón de play
+      updatePlayButtonVisibility();
+      
+      // Asegurar que el video original tenga el tamaño correcto
+      video.style.width = '100%';
+      video.style.height = '100%';
+      
+      // Forzar un reflow para que el navegador recalcule las dimensiones
+      void video.offsetHeight;
+    }
+    
+    // Función para resetear completamente el video a su estado inicial
+    function resetVideoToInitialState() {
+      if (!video) return;
+      
+      video.pause();
+      video.currentTime = 0;
+      if (wrapper) {
+        wrapper.classList.remove('playing');
+      }
+      updatePlayButtonVisibility();
     }
     
     // Iniciar reproducción automática en pantalla completa
@@ -93,8 +131,25 @@
       if (autoPlayAttempted) return;
       autoPlayAttempted = true;
       
-      // Entrar en pantalla completa directamente
+      // Resetear el video original al inicio antes de entrar en fullscreen
+      if (video) {
+        video.currentTime = 0;
+        video.pause();
+      }
+      
+      // Entrar en pantalla completa
       enterFullscreen();
+    }
+    
+    // Actualizar la visibilidad del botón de play
+    function updatePlayButtonVisibility() {
+      if (video && wrapper) {
+        if (video.paused || video.ended) {
+          wrapper.classList.remove('playing');
+        } else {
+          wrapper.classList.add('playing');
+        }
+      }
     }
     
     // Eventos del video en pantalla completa
@@ -102,19 +157,16 @@
       // Cuando termina el video en pantalla completa, salir del modo
       fullscreenVideo.addEventListener('ended', () => {
         exitFullscreen();
-      });
-      
-      // Evento para pausar (opcional)
-      fullscreenVideo.addEventListener('pause', () => {
-        // No hacemos nada especial
-      });
-      
-      fullscreenVideo.addEventListener('play', () => {
-        // No hacemos nada especial
+        // Resetear el video original al estado inicial
+        if (video) {
+          video.currentTime = 0;
+          video.pause();
+          updatePlayButtonVisibility();
+        }
       });
     }
     
-    // Evento para cerrar manualmente (opcional)
+    // Evento para cerrar manualmente (opcional, pero lo mantenemos)
     if (closeFullscreenBtn) {
       closeFullscreenBtn.addEventListener('click', () => {
         exitFullscreen();
@@ -132,17 +184,7 @@
       });
     }
     
-    // Sincronizar el estado del botón de play del video original
-    function updatePlayButtonVisibility() {
-      if (video && wrapper) {
-        if (video.paused) {
-          wrapper.classList.remove('playing');
-        } else {
-          wrapper.classList.add('playing');
-        }
-      }
-    }
-    
+    // Eventos del video original
     if (video) {
       video.addEventListener('play', () => {
         if (wrapper) wrapper.classList.add('playing');
@@ -150,6 +192,11 @@
       
       video.addEventListener('pause', () => {
         if (wrapper) wrapper.classList.remove('playing');
+      });
+      
+      video.addEventListener('ended', () => {
+        if (wrapper) wrapper.classList.remove('playing');
+        updatePlayButtonVisibility();
       });
     }
     
