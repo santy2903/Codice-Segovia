@@ -7,23 +7,23 @@
     <title>Códice - El Guardián</title>
 </head>
 <body>
-    <!-- Contenedor principal que se ocultará cuando el video esté en fullscreen -->
+    <!-- Contenedor principal -->
     <div class="container" id="mainContainer">
         <h2>Habeis resuelto la primera parte del Códice. Reproducir el video.</h2>
 
         <!-- Wrapper de video con botón de play personalizado -->
         <div class="video-wrapper" id="videoWrapper">
-            <video id="video" class="video" playsinline preload="auto">
+            <video id="video" class="video" playsinline preload="auto" muted>
                 <source src="despues11.mp4" type="video/mp4">
                 Tu navegador no soporta la etiqueta de video.
             </video>
-            <!-- Botón de play redondo (se mostrará si falla autoplay) -->
+            <!-- Botón de play redondo -->
             <button class="custom-play-button" id="customPlayBtn" aria-label="Reproducir video">
                 <div class="play-icon"></div>
             </button>
         </div>
 
-        <!-- Mensaje del guardian con la nueva frase (sin pista) -->
+        <!-- Mensaje del guardian -->
         <div class="guardian-message">
             ⚡ Antes de continuar, hablad con el Guardián ⚡<br>
             <span style="font-size: 0.95em; opacity: 0.9;">La contraseña para seguir, os la dará él</span>
@@ -36,7 +36,7 @@
         </div>
     </div>
 
-    <!-- Video en pantalla completa (se crea dinámicamente) -->
+    <!-- Video en pantalla completa (overlay) -->
     <div id="fullscreenVideoOverlay" class="fullscreen-overlay" style="display: none;">
         <video id="fullscreenVideo" class="fullscreen-video" playsinline preload="auto"></video>
         <button id="closeFullscreenBtn" class="close-fullscreen-btn" style="display: none;">✕</button>
