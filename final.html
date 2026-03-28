@@ -7,6 +7,7 @@
     <title>Códice - El Guardián</title>
 </head>
 <body>
+    <!-- Contenedor principal que se ocultará cuando el video esté en fullscreen -->
     <div class="container" id="mainContainer">
         <h2>Habeis resuelto la primera parte del Códice. Reproducir el video.</h2>
 
@@ -33,6 +34,12 @@
             <input type="text" class="password-input" id="passwordInput" placeholder="🔒 Introducir contraseña" autocomplete="off">
             <button id="mapaButton">Continuar</button>
         </div>
+    </div>
+
+    <!-- Video en pantalla completa (se crea dinámicamente) -->
+    <div id="fullscreenVideoOverlay" class="fullscreen-overlay" style="display: none;">
+        <video id="fullscreenVideo" class="fullscreen-video" playsinline preload="auto"></video>
+        <button id="closeFullscreenBtn" class="close-fullscreen-btn" style="display: none;">✕</button>
     </div>
 
     <script src="final.js"></script>
