@@ -28,16 +28,6 @@ body {
 }
 
 /* ========== TÍTULOS ========== */
-h1 {
-  font-size: clamp(1.4rem, 6vw, 2rem);
-  line-height: 1.3;
-  text-shadow: 0 2px 6px black;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  margin: 0;
-  width: 100%;
-}
-
 h2 {
   line-height: 40px;
   font-size: 1.2rem;
@@ -83,7 +73,7 @@ body.video-fullscreen .container {
   transition: all 0.4s ease;
 }
 
-/* ========== VIDEO ========== */
+/* ========== VIDEO NORMAL ========== */
 .video {
   width: 100%;
   height: 100%;
@@ -91,7 +81,6 @@ body.video-fullscreen .container {
   object-fit: cover;
   background: #000;
   border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 /* ========== OVERLAY DE PANTALLA COMPLETA ========== */
@@ -116,7 +105,7 @@ body.video-fullscreen .container {
   background: black;
 }
 
-/* Para videos con relación 9:16 que no cubran completamente en horizontal */
+/* Para orientación horizontal */
 @media (orientation: landscape) {
   .fullscreen-video {
     width: auto;
@@ -125,7 +114,7 @@ body.video-fullscreen .container {
   }
 }
 
-/* Botón para cerrar pantalla completa (opcional, se puede ocultar) */
+/* Botón para cerrar pantalla completa (opcional, oculto por defecto) */
 .close-fullscreen-btn {
   position: absolute;
   top: 20px;
