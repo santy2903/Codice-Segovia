@@ -39,6 +39,7 @@ h1 {
 
 h2 {
   line-height: 40px;
+  font-size: 1.2rem;
 }
 
 /* ========== CONTENEDOR PRINCIPAL ========== */
@@ -56,7 +57,14 @@ h2 {
   flex-direction: column;
   align-items: center;
   gap: 18px;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s ease;
+}
+
+/* Ocultar el contenedor principal cuando el video está en pantalla completa */
+body.video-fullscreen .container {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 /* ========== VIDEO WRAPPER (normal) ========== */
@@ -64,13 +72,13 @@ h2 {
   position: relative;
   width: 100%;
   max-width: 640px;
-  aspect-ratio: 16 / 9; /* por defecto, pero se ajustará si es necesario */
+  aspect-ratio: 9 / 16;
   margin-bottom: 20px;
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-  background-color: #111;
-  transition: all 0.3s ease;
+  background-color: #000;
+  transition: all 0.4s ease;
 }
 
 /* ========== VIDEO ========== */
@@ -84,41 +92,58 @@ h2 {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-/* ========== ESTILO DE PANTALLA COMPLETA (9:16 vertical) ========== */
-.video-wrapper.fullscreen-mode {
+/* ========== MODO PANTALLA COMPLETA - RELLENA TODA LA PANTALLA ========== */
+body.video-fullscreen {
+  overflow: hidden;
+  padding: 0;
+}
+
+body.video-fullscreen .video-wrapper {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
   max-width: none;
   max-height: none;
   margin: 0;
   border-radius: 0;
   z-index: 9999;
   background: black;
-  aspect-ratio: auto; /* anula la relación original */
+  aspect-ratio: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: none;
+  animation: fadeIn 0.3s ease;
 }
 
-.video-wrapper.fullscreen-mode .video {
-  width: auto;
+body.video-fullscreen .video {
+  width: 100%;
   height: 100%;
-  max-width: 100%;
-  object-fit: contain; /* para mantener la relación 9:16 sin recortes */
+  object-fit: cover;
   border-radius: 0;
   box-shadow: none;
 }
 
-/* Para que en móviles con pantalla ancha se vea bien */
+/* Para videos con relación 9:16 que no cubran completamente en horizontal */
 @media (orientation: landscape) {
-  .video-wrapper.fullscreen-mode .video {
-    width: 100%;
-    height: auto;
-    max-height: 100%;
+  body.video-fullscreen .video {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
@@ -139,7 +164,7 @@ h2 {
   align-items: center;
   justify-content: center;
   transition: transform 0.2s ease, background-color 0.2s;
-  z-index: 15;
+  z-index: 20;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
 }
@@ -260,12 +285,19 @@ h2 {
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
   body {
-    background-image: url('criptex.jpg');
-    background-size: cover;
+    padding: 16px;
+  }
+  
+  body.video-fullscreen {
+    padding: 0;
+  }
+  
+  .container {
+    margin: 50px 16px;
   }
 
-  h1 {
-    font-size: 2rem;
+  h2 {
+    font-size: 1rem;
   }
 
   .video-wrapper {
@@ -274,7 +306,7 @@ h2 {
 
   #mapaButton {
     font-size: 1.2rem;
-    padding: 8px 16px;
+    padding: 12px 16px;
   }
 }
 
