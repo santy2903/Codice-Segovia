@@ -3,38 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="stylesheet" href="final.css">
-    <title>Códice - El Guardián</title>
+    <title>El código secreto de Segovia</title>
+    <link rel="stylesheet" href="instrucciones.css">
 </head>
 <body>
-    <div class="container">
-        <h2>Habeis resuelto la primera parte del Códice. Reproducir el video.</h2>
-
-        <!-- Wrapper de video con botón de play personalizado -->
-        <div class="video-wrapper" id="videoWrapper">
-            <video id="video" class="video" playsinline preload="auto">
-                <source src="despues11.mp4" type="video/mp4">
-                Tu navegador no soporta la etiqueta de video.
-            </video>
-            <!-- Botón de play redondo (se mostrará si falla autoplay) -->
-            <button class="custom-play-button" id="customPlayBtn" aria-label="Reproducir video">
-                <div class="play-icon"></div>
-            </button>
-        </div>
-
-        <!-- Mensaje del guardian con la nueva frase (sin pista) -->
-        <div class="guardian-message">
-            ⚡ Antes de continuar, hablad con el Guardián ⚡<br>
-            <span style="font-size: 0.95em; opacity: 0.9;">La contraseña para seguir, os la dará él</span>
-        </div>
-
-        <!-- Cuadro de texto para contraseña + botón continuar -->
-        <div class="password-box">
-            <input type="text" class="password-input" id="passwordInput" placeholder="🔒 Introducir contraseña" autocomplete="off">
-            <button id="mapaButton">Continuar</button>
-        </div>
+  <div class="container">
+    <h1>Antes de seguir, mirad el vídeo de Instrucciones del Juego</h1>
+    <div class="video-wrapper">
+      <video id="video" class="video" preload="metadata" playsinline>
+        <source src="videoinstrucciones.mp4" type="video/mp4">
+        Tu navegador no soporta la etiqueta de video.
+      </video>
+      <button id="playButton" class="play-button" aria-label="Reproducir video">
+        <svg viewBox="0 0 24 24" width="48" height="48">
+          <path fill="white" d="M8 5v14l11-7z"/>
+        </svg>
+      </button>
     </div>
+    <button id="mapaButton">Ir al Mapa</button>
+  </div>
 
-    <script src="final.js"></script>
+  <script src="instrucciones.js"></script>
 </body>
 </html>
