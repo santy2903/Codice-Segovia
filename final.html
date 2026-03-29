@@ -2,28 +2,32 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <link rel="stylesheet" href="final.css">
-
+    <title>Códice - El Guardián</title>
 </head>
 <body>
-    <div class="container">
-        <h2> Habeis resuelto la primera parte  del Códice.  Reproducir el video.</h2>
+    <!-- Contenedor principal -->
+    <div class="container" id="mainContainer">
+        <h2>Habeis resuelto la primera parte del Códice. Reproducir el video.</h2>
 
-
-        <!-- Wrapper de video con botón de play personalizado -->
+        <!-- Wrapper de video (oculto inicialmente después de terminar) -->
         <div class="video-wrapper" id="videoWrapper">
-            <video id="video" class="video" playsinline preload="metadata" controls playsinline >
+            <video id="video" class="video" playsinline preload="auto">
                 <source src="despues11.mp4" type="video/mp4">
                 Tu navegador no soporta la etiqueta de video.
             </video>
-            <!-- Botón de play redondo -->
-            <button class="custom-play-button" id="customPlayBtn" aria-label="Reproducir video">
-                <div class="play-icon"></div>
-            </button>
         </div>
 
-        <!-- Mensaje del guardian con la nueva frase (sin pista) -->
+        <!-- Botón para volver a ver el video (aparece después de que termina) -->
+        <div class="replay-container" id="replayContainer" style="display: none;">
+            <button class="replay-button" id="replayButton">
+                <div class="replay-play-icon"></div>
+            </button>
+            <p class="replay-message">Volver a ver el video</p>
+        </div>
+
+        <!-- Mensaje del guardian -->
         <div class="guardian-message">
             ⚡ Antes de continuar, hablad con el Guardián ⚡<br>
             <span style="font-size: 0.95em; opacity: 0.9;">La contraseña para seguir, os la dará él</span>
@@ -34,6 +38,11 @@
             <input type="text" class="password-input" id="passwordInput" placeholder="🔒 Introducir contraseña" autocomplete="off">
             <button id="mapaButton">Continuar</button>
         </div>
+    </div>
+
+    <!-- Video en pantalla completa (overlay) -->
+    <div id="fullscreenVideoOverlay" class="fullscreen-overlay" style="display: none;">
+        <video id="fullscreenVideo" class="fullscreen-video" playsinline preload="auto"></video>
     </div>
 
     <script src="final.js"></script>
