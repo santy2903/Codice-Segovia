@@ -1,118 +1,96 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // Elementos
+  const video = document.getElementById('video');
+  const playButton = document.getElementById('playButton');
   const mapaButton = document.getElementById('mapaButton');
-  const body = document.body;
+
+  // Configurar video
+  video.setAttribute('playsinline', '');
   
-  // Elementos para volver a ver el video
-  const replayContainer = document.getElementById('replayContainer');
-  const replayButton = document.getElementById('replayButton');
-  
-  // Elementos del overlay de pantalla completa
-  const fullscreenOverlay = document.getElementById('fullscreenVideoOverlay');
-  const fullscreenVideo = document.getElementById('fullscreenVideo');
-  
-  // Variable para controlar el estado
-  let isFullscreen = false;
-  let autoPlayAttempted = false;
-  let videoSource = 'videoinstrucciones.mp4';
-  
-  // --- FUNCIONES PARA PANTALLA COMPLETA ---
-  
-  // Entrar en modo pantalla completa y reproducir video
-  function enterFullscreen() {
-    if (!fullscreenOverlay || !fullscreenVideo) return;
-    
-    // Copiar la fuente del video al overlay
-    fullscreenVideo.src = videoSource;
-    fullscreenVideo.load();
-    
-    // Mostrar el overlay
-    fullscreenOverlay.style.display = 'flex';
-    body.classList.add('video-fullscreen');
-    isFullscreen = true;
-    
-    // Ocultar el contenedor de replay si estaba visible
-    if (replayContainer) {
-      replayContainer.style.display = 'none';
+  // Función para entrar en pantalla completa
+  function enterFullscreen(element) {
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if (element.webkitRequestFullscreen) { // Safari
+      element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) { // IE/Edge
+      element.msRequestFullscreen();
     }
-    
-    // Reproducir el video
-    setTimeout(async () => {
-      try {
-        // Resetear al inicio si es necesario
-        if (fullscreenVideo.ended || fullscreenVideo.currentTime === fullscreenVideo.duration) {
-          fullscreenVideo.currentTime = 0;
-        }
-        await fullscreenVideo.play();
-      } catch (err) {
-        console.warn('Error al reproducir en pantalla completa:', err);
-      }
-    }, 100);
   }
-  
-  // Salir del modo pantalla completa
+
+  // Función para salir de pantalla completa
   function exitFullscreen() {
-    if (!fullscreenOverlay || !fullscreenVideo) return;
-    
-    // Detener el video del overlay
-    fullscreenVideo.pause();
-    
-    // Limpiar la fuente del overlay para liberar memoria
-    fullscreenVideo.src = '';
-    
-    // Ocultar el overlay
-    fullscreenOverlay.style.display = 'none';
-    body.classList.remove('video-fullscreen');
-    isFullscreen = false;
-    
-    // Mostrar el botón de replay y el mensaje
-    if (replayContainer) {
-      replayContainer.style.display = 'flex';
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) { // Safari
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) { // IE/Edge
+      document.msExitFullscreen();
     }
   }
-  
-  // Función para iniciar la reproducción automática al cargar la página
-  async function startAutoPlayFullscreen() {
-    if (autoPlayAttempted) return;
-    autoPlayAttempted = true;
+
+  // Detectar cuando el video termina
+  video.addEventListener('ended', function() {
+    exitFullscreen();
+  });
+
+  // Reproducir video al hacer clic en el botón
+  playButton.addEventListener('click', function() {
+    // Ocultar botón de play
+    playButton.style.display = 'none';
     
-    // Entrar en pantalla completa directamente
-    enterFullscreen();
-  }
-  
-  // Evento para cuando el video termina en pantalla completa
-  if (fullscreenVideo) {
-    fullscreenVideo.addEventListener('ended', () => {
-      // Salir del modo fullscreen y mostrar el botón de replay
-      exitFullscreen();
+    // Intentar reproducir el video
+    video.play().then(() => {
+      // Entrar en pantalla completa
+      enterFullscreen(video);
+    }).catch(error => {
+      console.log('Error al reproducir:', error);
+      // Si hay error, mostrar el botón de nuevo
+      playButton.style.display = 'flex';
     });
-  }
-  
-  // Evento para el botón de replay (volver a ver el video)
-  if (replayButton) {
-    replayButton.addEventListener('click', (e) => {
-      e.stopPropagation();
-      // Volver a entrar en pantalla completa y reproducir el video
-      enterFullscreen();
-    });
-  }
-  
-  // Botón para ir al mapa
-  if (mapaButton) {
-    mapaButton.addEventListener('click', function () {
-      // Salir de pantalla completa si está activada
-      if (fullscreenOverlay && fullscreenOverlay.style.display === 'flex') {
-        exitFullscreen();
+  });
+
+  // Si el usuario pausa manualmente, mostrar el botón de play
+  video.addEventListener('pause', function() {
+    // Solo mostrar el botón si no está en modo pantalla completa
+    if (!document.fullscreenElement) {
+      playButton.style.display = 'flex';
+    }
+  });
+
+  // Ocultar botón cuando se reproduce
+  video.addEventListener('play', function() {
+    playButton.style.display = 'none';
+  });
+
+  // Manejar cambios en pantalla completa
+  document.addEventListener('fullscreenchange', function() {
+    if (!document.fullscreenElement) {
+      // Si salimos de pantalla completa y el video está en pausa, mostrar botón
+      if (video.paused) {
+        playButton.style.display = 'flex';
       }
-      // Reiniciar las respuestas en localStorage
-      localStorage.clear();
-      // Redirigir a la página mapa.html
-      window.location.href = 'mapa.html';
-    });
-  }
-  
-  // Iniciar automáticamente al cargar la página
-  setTimeout(() => {
-    startAutoPlayFullscreen();
-  }, 200);
+    }
+  });
+
+  // Para Safari
+  document.addEventListener('webkitfullscreenchange', function() {
+    if (!document.webkitFullscreenElement) {
+      if (video.paused) {
+        playButton.style.display = 'flex';
+      }
+    }
+  });
+
+  // Botón para ir al mapa
+  mapaButton.addEventListener('click', function () {
+    // Salir de pantalla completa si está activada
+    exitFullscreen();
+    // Reiniciar las respuestas en localStorage
+    localStorage.clear();
+    // Redirigir a la página mapa.html
+    window.location.href = 'mapa.html';
+  });
+
+  // Asegurar que el botón de play se muestre inicialmente
+  playButton.style.display = 'flex';
 });
